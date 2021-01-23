@@ -1,0 +1,30 @@
+#sumo-site.dark {
+  background-color: $background-gray-dk;
+  
+  .header {
+    color: $text-gray-dk;
+    border-bottom-color: $red-dk;
+  }
+
+  .menu-bar {
+    .menu-bar-item a {
+      color: $text-gray-dk;
+      &.current {
+        border-bottom: 1px solid darken($text-gray-dk, 15%);
+        color: darken($text-gray-dk, 15%);
+      }
+
+      &:hover {
+        color: darken($text-gray-dk, 15%);
+      }
+    }
+  }
+
+  .rikishi-list {
+    .rikishi-list-item {
+      .name {
+        color: $text-gray-dk;
+      }
+    }
+  }
+}

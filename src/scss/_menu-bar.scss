@@ -1,0 +1,44 @@
+.menu-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 15px 10px 50px 10px;
+  margin: 0;
+
+  .menu-bar-item {
+    display: inline-block;
+    font-size: 12px;
+    padding-right: 25px;
+    a {
+      font-weight: 400;
+      text-decoration: none;
+      color: $gray-black;
+
+      &.current {
+        border-bottom: 1px solid $black;
+        color: $black;
+      }
+
+      &:hover {
+        color: $black;
+      }
+    }
+  }
+}
+
+@media (min-width: 375px) {
+  .menu-bar {
+    .menu-bar-item {
+      font-size: 14px;
+    }
+  }
+}
+
+// tablet and bigger
+@media (min-width: 768px) {
+  .menu-bar {
+    .menu-bar-item {
+      font-size: 24px;
+    }
+  }
+}
