@@ -1,0 +1,49 @@
+.table {
+  color: $gray-black;
+  display: table;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  .table-headers {
+    display: table-header-group;
+  }
+
+  .table-rows {
+    display: table-row-group;
+  }
+
+  ul {
+    margin: 0;
+
+    li.header-row, li.data-row {
+      display: table-row;
+    }
+
+    .header-entry, .data-entry {
+      display: table-cell;
+      padding: 10px;
+      vertical-align: middle;
+    }
+
+    .header-entry {
+      font-weight: bold;
+      border-bottom: 1px solid;
+      padding-bottom: 15px;
+    }
+
+    .data-entry.image {
+      width: 60px;
+      .img {
+        // these are 160 x 160 files, but look good at 60 x 60
+        width: 60px;
+        height: 60px;
+        border-radius: 90px;
+        background-size: contain;
+        background-position: left;
+        // border? no border? softer border color?
+        border: 1px solid $black;
+      }
+    }
+  }
+}

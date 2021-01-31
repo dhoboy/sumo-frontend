@@ -4,12 +4,14 @@ html {
   -moz-osx-font-smoothing: grayscale;
   @import './colors';
   @import './react-toggle';
+  @import './table';
+  
   font-size: 14px;
 
   #sumo-site {
     background-color: $white;
     margin: auto;
-    // this fixes the footer, but page content needs to scroll...
+    // this fixes the footer at bottom of viewport, but page content needs to scroll...
     //height: 100vh;
     display: flex;
     flex-direction: column;

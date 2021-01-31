@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import RikishiList from "./components/RikishiList";
+import { RikishiList } from "./components/RikishiList";
 import MatchResults from "./components/MatchResults";
 
 const AppRoutes = () => {
