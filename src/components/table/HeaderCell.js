@@ -9,17 +9,14 @@ const HeaderCell = ({ colKey, display, sort, setSort }) => {
     });
   };
 
-  const handleSortDirectionClick = () => {
-    setSort({
-      ...sort,
-      direction: sort.direction === "asc" ? "desc" : "asc",
-    });
-  };
-
   return (
     <div className="header-entry" onClick={handleSortClick}>
       <span>{display}</span>
-      {sort.key === colKey ? <span onClick={handleSortDirectionClick}>sortArrow</span> : null}
+      {sort.key === colKey ? (
+        <span key={sort.direction}>
+          <i className={`fas fa-sort-alpha-${sort.direction === "asc" ? "up" : "down-alt"}`}></i>
+        </span>
+       ) : null}
     </div>
   );
 };

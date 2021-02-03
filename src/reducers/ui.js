@@ -1,5 +1,5 @@
 const initialState = {
-  colorTheme: "light",
+  colorTheme: "dark",
 };
 
 const ui = (state = initialState, action) => {

@@ -30,6 +30,9 @@
       font-weight: bold;
       border-bottom: 1px solid;
       padding-bottom: 15px;
+      span:first-child {
+        padding-right: 5px;
+      }
     }
 
     .data-entry.image {

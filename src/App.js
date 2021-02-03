@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { HashRouter } from "react-router-dom";
 import AppContent from "./AppContent";
-import '@fortawesome/fontawesome-free/js/all.js';
+import "@fortawesome/fontawesome-free/js/all.js";
 import "./scss/app.scss";
 
 const App = ({ store = {} }) => {

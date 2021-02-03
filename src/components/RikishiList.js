@@ -7,7 +7,7 @@ import Table from "./table/Table";
 //export const RikishiListContext = React.createContext();
 
 const initialSortState = {
-  key: null, // column key to sort on
+  key: "name", // column key to sort on
   direction: "asc", // or "desc"
 };
 
@@ -35,7 +35,7 @@ export const RikishiList = () => {
   const displayList = list.sort((a, b) => {
     const { key, direction } = sort;
     if (key) {
-      return direction === "asc" ? b[key].localeCompare(a[key]) : a[key].localeCompare(b[key]);
+      return direction === "asc" ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]);
     }
     return 1;
   });
