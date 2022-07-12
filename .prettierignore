@@ -1,0 +1,7 @@
+.git/
+public/
+.eslintrc.js
+.gitignore
+package.json
+package-lock.json
+README.md

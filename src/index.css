@@ -1,13 +1,59 @@
-body {
+:root {
+  --white: #ffffff;
+  --black: #000;
+	--gray-black: #333;
+	--text-black: #333;
+	--sun-yellow: #fed976;
+	--moon-blue: #a6bddb;
+  --moon-blue-dark: #1A447A;
+  --background-gray-dk: #282D33;
+	--background-md-gray-dk: #5B6775;
+	--text-gray-dk: #adbac7;
+	--text-md-gray-dk: #eee;
+	--red-dk: #800026;
+	--header-dk: #223333;
+	--visited-link: pink;
+	--selected-item: #869CFA;
+  --active-green: hsla(160, 100%, 37%, 0.2);
+}
+
+/* semantic color variables for this project */
+:root {
+  --section-gap: 160px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--background-gray-dk);
+    --color-background-soft: var(--background-md-gray-dk);
+    --color-heading-background: var(--header-dk);
+    --color-text: var(--text-gray-dk);
+    --color-anchor: var(--red-dk);
+    --color-active: var(--moon-blue-dark);
+    --color-text-active: var(--moon-blue);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  position: relative;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
