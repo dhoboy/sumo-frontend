@@ -10,6 +10,7 @@ import {
 } from "../../stores/tournamentDatesSlice.js";
 import RikishiTournamentSummary from "../../components/RikishiTournamentSummary";
 import Pagination from "../../components/Pagination";
+import styles from "./TournamentList.module.css";
 
 // TODO: Should TournamentSummary be a separate component?
 // Need to get the summmary data of each tournament shows in
@@ -44,39 +45,22 @@ const TournamentList = () => {
 
   const name = "TODO";
 
-  const headers = [
-    {
-      colKey: "rikishi",
-      display: "Rikishi",
-      sortType: "string",
-      linkFn: `/rikishi/${name}`,
-    },
-    {
-      colKey: "rank",
-      display: "Rank",
-      sortKey: "rank_value",
-      sortType: "number",
-    },
-    // { colKey: "wins", display: "Wins", sortType: "number" },
-    // { colKey: "losses", display: "Losses", sortType: "number" },
-    // { colKey: "result", display: "Result", sortType: "string" },
-  ];
-
   return (
-    <div>
+    <div className={styles.tournamentList}>
       <h2>Filters go here</h2>
-      <div className="tournament-list"></div>
-      {tournamentDates
-        .slice((page - 1) * per, page * per - 1)
-        .map(({ year, month }) => {
-          return (
-            <RikishiTournamentSummary
-              key={`${year}-${month}`}
-              year={year}
-              month={month}
-            />
-          );
-        })}
+      <div>
+        {tournamentDates
+          .slice((page - 1) * per, page * per - 1)
+          .map(({ year, month }) => {
+            return (
+              <RikishiTournamentSummary
+                key={`${year}-${month}`}
+                year={year}
+                month={month}
+              />
+            );
+          })}
+      </div>
       <Pagination
         currentPage={+page}
         totalPages={+totalPages}

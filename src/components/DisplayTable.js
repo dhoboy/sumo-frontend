@@ -1,4 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
+import styles from "./styles/DisplayTable.module.css";
+
+const prop_info = {
+  headers: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+};
 
 const DisplayTable = ({ headers, data }) => {
   // TODO: add sort to url
@@ -32,12 +39,16 @@ const DisplayTable = ({ headers, data }) => {
     : data;
 
   return (
-    <table>
-      <thead>
+    <table className={styles.table}>
+      <thead className={styles.thead}>
         <tr>
           {headers.map((header) => {
             return (
-              <th onClick={onHeaderClick(header.colKey)}>
+              <th
+                key={header.colKey}
+                className={styles.th}
+                onClick={onHeaderClick(header.colKey)}
+              >
                 {header.display}
                 {sort === header.colKey && dir === "asc" && (
                   <span>
@@ -55,11 +66,15 @@ const DisplayTable = ({ headers, data }) => {
         </tr>
       </thead>
       <tbody>
-        {displayData.map((entry) => {
+        {displayData.map((entry, i) => {
           return (
-            <tr>
-              {headers.map((header) => {
-                return <td>{entry[header.colKey]}</td>;
+            <tr key={`tr-${i}`}>
+              {headers.map((header, j) => {
+                return (
+                  <td className={styles.td} key={`td-${j}`}>
+                    {entry[header.colKey]}
+                  </td>
+                );
               })}
             </tr>
           );
@@ -68,5 +83,7 @@ const DisplayTable = ({ headers, data }) => {
     </table>
   );
 };
+
+DisplayTable.propTypes = prop_info;
 
 export default DisplayTable;

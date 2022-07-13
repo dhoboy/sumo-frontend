@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styles from "./styles/Pagination.module.css";
 
 // my convention so I can see prop info at top of the file
 const prop_info = {
@@ -20,16 +21,32 @@ const Pagination = ({ currentPage, totalPages, changePage }) => {
   };
 
   return (
-    <div className="pagination">
-      <span onClick={() => handleClick(+currentPage - 1)}>&lt;</span>
+    <div className={styles.wrapper}>
+      <span
+        className={styles.carrot}
+        onClick={() => handleClick(+currentPage - 1)}
+      >
+        &lt;
+      </span>
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
         return (
-          <span key={page} onClick={() => handleClick(page)}>
+          <span
+            className={`${styles.page} ${
+              +page === +currentPage ? styles.active : null
+            }`}
+            key={page}
+            onClick={() => handleClick(page)}
+          >
             {page}
           </span>
         );
       })}
-      <span onClick={() => handleClick(+currentPage + 1)}>&gt;</span>
+      <span
+        className={styles.carrot}
+        onClick={() => handleClick(+currentPage + 1)}
+      >
+        &gt;
+      </span>
     </div>
   );
 };
