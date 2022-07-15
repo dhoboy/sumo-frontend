@@ -69,10 +69,18 @@ const DisplayTable = ({ headers, data }) => {
         {displayData.map((entry, i) => {
           return (
             <tr key={`tr-${i}`}>
-              {headers.map((header, j) => {
+              {headers.map(({ colKey, linkFn }, j) => {
+                const handleClick = () => {
+                  if (linkFn) linkFn(entry[colKey]);
+                };
+
                 return (
-                  <td className={styles.td} key={`td-${j}`}>
-                    {entry[header.colKey]}
+                  <td
+                    onClick={handleClick}
+                    className={styles.td}
+                    key={`td-${j}`}
+                  >
+                    {entry[colKey]}
                   </td>
                 );
               })}

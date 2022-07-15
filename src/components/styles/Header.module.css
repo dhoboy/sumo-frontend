@@ -1,4 +1,8 @@
-h1 {
+.header {
+  height: 125px;
+}
+
+.h1 {
 	font-family: "Secular One", sans-serif;
 	letter-spacing: 0.1em;
 	padding: 10px;
@@ -10,43 +14,33 @@ h1 {
 	color: var(--text-gray-dk);
 }
 
-nav {
+.nav {
   display: flex;
 	justify-content: space-around;
 	padding: 15px 0;
 	width: 100%;
-	font-size: 14px;
+	font-size: 19px;
 	text-align: center;
 }
 
-a {
+.nav a {
 	font-family: "Secular One", sans-serif;
-  text-decoration: none;
 	font-size: 22px;
 	color: var(--color-text);
-	border-radius: 4px;
 	display: inline-block;
-	padding: 0 1rem;
-	border-left: 1px solid var(--color-border);
+	border-bottom: 1px solid var(--color-background);
 	text-decoration: none;
 	transition: 0.4s;
 }
 
-a.router-link-exact-active {
+.nav a.active {
 	color: var(--color-text-active);
-}
-
-a.router-link-exact-active:hover {
-	background-color: transparent;
-}
-
-a:first-of-type {
-	border: 0;
+	border-bottom-color: var(--color-text);
 }
 
 @media (hover: hover) {
-	a:hover {
-		background-color: var(--color-active);
+	.nav a:hover {
+		border-bottom-color: var(--color-text);
 	}
 }
 

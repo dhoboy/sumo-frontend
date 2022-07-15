@@ -4,11 +4,13 @@ import axios from "axios";
 
 /*
  *  Slice contains Rikishi result summaries for every tournament
+ *  All items keyed by `${year}-${month}`
+ *  e.g. status: { "2021-05": LOADING, "2021-07": SUCCESS, ... }
  **/
 const initialState = {
-  status: IDLE,
+  status: {},
   data: {},
-  errorMsg: "",
+  errorMsg: {},
 };
 
 export const fetchTournamentSummary = createAsyncThunk(
@@ -30,17 +32,21 @@ export const rikishiTournamentSummarySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTournamentSummary.pending, (state) => {
-        state.status = LOADING;
+      .addCase(fetchTournamentSummary.pending, (state, action) => {
+        const { year, month } = action.meta.arg;
+        const key = `${year}-${month}`;
+        state.status[key] = LOADING;
       })
       .addCase(fetchTournamentSummary.fulfilled, (state, action) => {
         const { key, data } = action.payload;
-        state.status = SUCCESS;
+        state.status[key] = SUCCESS;
         state.data[key] = data;
       })
       .addCase(fetchTournamentSummary.rejected, (state, action) => {
-        state.status = FAILED;
-        state.errorMsg = action.payload;
+        const { year, month } = action.meta.arg;
+        const key = `${year}-${month}`;
+        state.status[key] = FAILED;
+        state.errorMsg[key] = action.payload;
       });
   },
 });
@@ -48,10 +54,10 @@ export const rikishiTournamentSummarySlice = createSlice({
 export const selectTournamentSummary = (state, { year, month }) =>
   state.rikishiTournamentSummary.data[`${year}-${month}`];
 
-export const selectTournamentSummaryStatus = (state) =>
-  state.rikishiTournamentSummary.status;
+export const selectTournamentSummaryStatus = (state, { year, month }) =>
+  state.rikishiTournamentSummary.status[`${year}-${month}`];
 
-export const selectTournamentSummaryErrorMsg = (state) =>
-  state.rikishiTournamentSummary.errorMsg;
+export const selectTournamentSummaryErrorMsg = (state, { year, month }) =>
+  state.rikishiTournamentSummary.errorMsg[`${year}-${month}`];
 
 export default rikishiTournamentSummarySlice.reducer;

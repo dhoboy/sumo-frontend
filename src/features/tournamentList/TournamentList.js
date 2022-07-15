@@ -46,20 +46,22 @@ const TournamentList = () => {
   const name = "TODO";
 
   return (
-    <div className={styles.tournamentList}>
-      <h2>Filters go here</h2>
+    <div className={styles.wrapper}>
       <div>
-        {tournamentDates
-          .slice((page - 1) * per, page * per - 1)
-          .map(({ year, month }) => {
-            return (
-              <RikishiTournamentSummary
-                key={`${year}-${month}`}
-                year={year}
-                month={month}
-              />
-            );
-          })}
+        <h2>Filters go here</h2>
+        <div className={styles.tournamentList}>
+          {tournamentDates
+            .slice((page - 1) * per, page * per - 1)
+            .map(({ year, month }) => {
+              return (
+                <RikishiTournamentSummary
+                  key={`${year}-${month}`}
+                  year={year}
+                  month={month}
+                />
+              );
+            })}
+        </div>
       </div>
       <Pagination
         currentPage={+page}

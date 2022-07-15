@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IDLE, LOADING, SUCCESS, FAILED } from "../constants.js";
+import DisplayTable from "../components/DisplayTable";
+import PropTypes from "prop-types";
+import Loader from "../components/Loader";
+import { monthMap } from "../utils";
+import styles from "./styles/RikishiTournamentSummary.module.css";
 import {
   fetchTournamentSummary,
   selectTournamentSummary,
   selectTournamentSummaryStatus,
   selectTournamentSummaryErrorMsg,
 } from "../stores/rikishiTournamentSummarySlice";
-import DisplayTable from "../components/DisplayTable.js";
-import PropTypes from "prop-types";
-import styles from "./styles/RikishiTournamentSummary.module.css";
 
 const prop_info = {
   year: PropTypes.number.isRequired,
@@ -18,8 +21,12 @@ const prop_info = {
 
 const RikishiTournamentSummary = ({ year, month }) => {
   const dispatch = useDispatch();
-  const status = useSelector(selectTournamentSummaryStatus);
-  const errorMsg = useSelector(selectTournamentSummaryErrorMsg);
+  const status = useSelector((state) =>
+    selectTournamentSummaryStatus(state, { year, month })
+  );
+  const errorMsg = useSelector((state) =>
+    selectTournamentSummaryErrorMsg(state, { year, month })
+  );
   const data = useSelector((state) =>
     selectTournamentSummary(state, { year, month })
   );
@@ -28,18 +35,17 @@ const RikishiTournamentSummary = ({ year, month }) => {
     if (!data) dispatch(fetchTournamentSummary({ year, month }));
   }, [data, dispatch, month, year]);
 
-  const tableReadyData = data?.map((d) => ({
+  const tableReadyData = (data || []).map((d) => ({
     ...d,
     ...d.results,
   }));
 
-  const name = "bababa";
   const headers = [
     {
       colKey: "rikishi",
       display: "Rikishi",
       sortType: "string",
-      linkFn: `/rikishi/${name}`,
+      linkFn: (name) => console.log(`/rikishi/${name}`),
     },
     {
       colKey: "rank",
@@ -53,12 +59,18 @@ const RikishiTournamentSummary = ({ year, month }) => {
   ];
 
   return (
-    <div className={styles.wrapper}>
-      {status === LOADING ? "loading!" : null}
-      {status === SUCCESS && data?.length ? (
-        <DisplayTable headers={headers} data={tableReadyData} />
-      ) : null}
-    </div>
+    <Loader loading={status === LOADING} error={false} errorMsg={errorMsg}>
+      <div className={styles.tournamentSummary}>
+        <h3 className={styles.h3}>
+          <Link to={`/tournaments/${year}/${month}`}>
+            {`${monthMap[month]} ${year}`}
+          </Link>
+        </h3>
+        <div className={styles.tableWrapper}>
+          <DisplayTable headers={headers} data={tableReadyData} />
+        </div>
+      </div>
+    </Loader>
   );
 };
 

@@ -1,7 +1,30 @@
-.wrapper {
+.tournamentSummary {
+  margin: 20px 0;
+}
+
+.h3 {
+  padding-bottom: 10px;
+}
+
+.h3 a {
+  text-decoration: none;
+	color: var(--color-text);
+	border-bottom: 1px solid var(--color-background);
+  padding-bottom: 2px;
+	transition: 0.4s;
+}
+
+.h3 a:hover {
+  border-bottom-color: var(--color-text);
+}
+
+.tableWrapper {
   max-height: 225px;
   overflow: scroll;
   border: 1px solid;
   border-radius: 4px;
-  margin: 20px 0;
+}
+
+.tableWrapper:last-child {
+  margin-bottom: 0;
 }

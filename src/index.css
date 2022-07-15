@@ -43,8 +43,13 @@
   font-weight: normal;
 }
 
+html, body, #root, #app {
+  height: 100%;
+  margin: 0;
+}
+
 body {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   color: var(--color-text);
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
