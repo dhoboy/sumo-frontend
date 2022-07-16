@@ -3,7 +3,7 @@ import { IDLE, LOADING, SUCCESS, FAILED } from "../constants.js";
 import axios from "axios";
 
 /*
- *  Slice contains Rikishi result summaries for every tournament
+ *  Slice contains every bout in every tournament
  *  All items keyed by `${year}-${month}`
  *  e.g. status: { "2021-05": LOADING, "2021-07": SUCCESS, ... }
  **/
@@ -13,36 +13,36 @@ const initialState = {
   errorMsg: {},
 };
 
-export const fetchTournamentSummary = createAsyncThunk(
-  "rikishiTournamentSummary/fetch",
+export const fetchTournamentBoutDetail = createAsyncThunk(
+  "tournamentBoutDetail/fetch",
   async ({ year, month }, { rejectWithValue }) => {
     try {
-      const url = `http://localhost:3005/tournament/details/${year}/${month}`;
+      const url = `http://localhost:3005/bout/list?year=${year}&month=${month}`;
       const resp = await axios.get(url);
-      return { key: `${year}-${month}`, data: resp.data.items };
+      return { key: `${year}-${month}`, data: resp.data };
     } catch ({ status, message }) {
       return rejectWithValue(message);
     }
   }
 );
 
-export const rikishiTournamentSummarySlice = createSlice({
-  name: "rikishiTournamentSummary",
+export const tournamentBoutDetailSlice = createSlice({
+  name: "tournamentBoutDetail",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTournamentSummary.pending, (state, action) => {
+      .addCase(fetchTournamentBoutDetail.pending, (state, action) => {
         const { year, month } = action.meta.arg;
         const key = `${year}-${month}`;
         state.status[key] = LOADING;
       })
-      .addCase(fetchTournamentSummary.fulfilled, (state, action) => {
+      .addCase(fetchTournamentBoutDetail.fulfilled, (state, action) => {
         const { key, data } = action.payload;
         state.status[key] = SUCCESS;
         state.data[key] = data;
       })
-      .addCase(fetchTournamentSummary.rejected, (state, action) => {
+      .addCase(fetchTournamentBoutDetail.rejected, (state, action) => {
         const { year, month } = action.meta.arg;
         const key = `${year}-${month}`;
         state.status[key] = FAILED;
@@ -51,13 +51,13 @@ export const rikishiTournamentSummarySlice = createSlice({
   },
 });
 
-export const selectTournamentSummary = (state, { year, month }) =>
-  state.rikishiTournamentSummary.data?.[`${year}-${month}`];
+export const selectTournamentBoutDetail = (state, { year, month }) =>
+  state.tournamentBoutDetail.data?.[`${year}-${month}`];
 
-export const selectTournamentSummaryStatus = (state, { year, month }) =>
-  state.rikishiTournamentSummary.status?.[`${year}-${month}`];
+export const selectTournamentBoutDetailStatus = (state, { year, month }) =>
+  state.tournamentBoutDetail.status?.[`${year}-${month}`];
 
-export const selectTournamentSummaryErrorMsg = (state, { year, month }) =>
-  state.rikishiTournamentSummary.errorMsg?.[`${year}-${month}`];
+export const selectTournamentBoutDetailErrorMsg = (state, { year, month }) =>
+  state.tournamentBoutDetail.errorMsg?.[`${year}-${month}`];
 
-export default rikishiTournamentSummarySlice.reducer;
+export default tournamentBoutDetailSlice.reducer;

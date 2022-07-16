@@ -1,18 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import styles from "./styles/DisplayTable.module.css";
 
 const prop_info = {
   headers: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
+  canSort: PropTypes.bool, // pass true if the table is allowed to sort
 };
 
-const DisplayTable = ({ headers, data }) => {
-  // TODO: add sort to url
-  const sort = undefined;
-  const dir = "TODO";
+const DisplayTable = ({ headers, data, canSort = false }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sort = canSort ? searchParams.get("sort") || "rank_value" : false;
+  const dir = searchParams.get("dir") || "desc"; // or asc
 
-  const onHeaderClick = () => {};
+  const onHeaderClick = (colKey) => {
+    setSearchParams({
+      sort: colKey,
+      dir: dir === "asc" ? "desc" : "asc",
+    });
+  };
 
   // sorts by strings, numbers, and dates; default sort is by strings
   const displayData = sort
@@ -46,8 +53,8 @@ const DisplayTable = ({ headers, data }) => {
             return (
               <th
                 key={header.colKey}
-                className={styles.th}
-                onClick={onHeaderClick(header.colKey)}
+                className={`${styles.th} ${canSort ? styles.sortable : ""} `}
+                onClick={() => canSort && onHeaderClick(header.colKey)}
               >
                 {header.display}
                 {sort === header.colKey && dir === "asc" && (

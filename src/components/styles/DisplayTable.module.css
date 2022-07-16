@@ -19,7 +19,15 @@
   user-select: none;
 }
 
-td {
+.th.sortable {
+  cursor: pointer;
+}
+
+.th span {
+  padding-left: 5px;
+}
+
+.td {
  padding: 15px;
  vertical-align: middle;
 }

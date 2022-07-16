@@ -18,6 +18,7 @@ const Header = () => {
         {navPaths.map(({ path, display }) => {
           return (
             <Link
+              key={path}
               className={pathname === path ? styles.active : null}
               to={path}
             >

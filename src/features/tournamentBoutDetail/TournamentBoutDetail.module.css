@@ -1,0 +1,35 @@
+.wrapper {
+  padding: 25px;
+}
+
+.h2 {
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--color-text);
+}
+
+.dayNav {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 15px 25px 15px;
+  overflow: scroll;
+}
+
+.dayNavItem {
+  text-decoration: none;
+  padding: 5px 10px;
+  color: var(--color-text);
+  border-radius: 4px;
+  margin: 10px;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+
+.dayNavItem.selected {
+  background-color: var(--selected-item);
+  color: var(--background-gray-dk);
+}
+
+.tableWrapper {
+  overflow: scroll;
+}

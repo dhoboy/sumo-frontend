@@ -17,7 +17,6 @@ import styles from "./TournamentList.module.css";
 // tournament list. do i get that data here?
 const TournamentList = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 

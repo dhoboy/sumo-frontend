@@ -62,7 +62,7 @@ const RikishiTournamentSummary = ({ year, month }) => {
     <Loader loading={status === LOADING} error={false} errorMsg={errorMsg}>
       <div className={styles.tournamentSummary}>
         <h3 className={styles.h3}>
-          <Link to={`/tournaments/${year}/${month}`}>
+          <Link to={`/tournaments/${year}/${month}/1`}>
             {`${monthMap[month]} ${year}`}
           </Link>
         </h3>
