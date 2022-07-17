@@ -21,18 +21,14 @@ const TournamentList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const tournamentDates = useSelector(selectTournamentDates, shallowEqual);
-  const status = useSelector(selectTournamentDatesStatus, shallowEqual);
-  const errorMsg = useSelector(selectTournamentDatesErrorMsg, shallowEqual);
+  // const status = useSelector(selectTournamentDatesStatus, shallowEqual);
+  // const errorMsg = useSelector(selectTournamentDatesErrorMsg, shallowEqual);
 
   const page = searchParams.get("page");
   const per = 5;
   const totalPages = Math.ceil(tournamentDates.length / per);
 
   console.log("tournamentDates: ", tournamentDates);
-
-  useEffect(() => {
-    if (status === IDLE) dispatch(fetchTournamentDates());
-  }, [dispatch, status]);
 
   useEffect(() => {
     if (!page) setSearchParams({ page: 1 });

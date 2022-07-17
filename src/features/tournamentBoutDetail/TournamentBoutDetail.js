@@ -13,7 +13,6 @@ import {
 } from "../../stores/tournamentBoutDetailSlice";
 import styles from "./TournamentBoutDetail.module.css";
 
-// TODO: Continue completing this component
 const TournamentBoutDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();

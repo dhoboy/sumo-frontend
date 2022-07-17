@@ -27,10 +27,7 @@ const initialState = {
 export const fetchRikishiList = createAsyncThunk(
   "rikishiInfo/fetchList",
   async (state, { rejectWithValue }) => {
-    // dont make request if already in progress
-    // if (state.status !== LOADING) {
     try {
-      // make request if one is not alrady in progress
       const url = `http://localhost:3005/rikishi/list`;
       const resp = await axios.get(url);
 
@@ -44,7 +41,6 @@ export const fetchRikishiList = createAsyncThunk(
       return rejectWithValue(message);
     }
   }
-  // }
 );
 
 export const rikishiInfoSlice = createSlice({
@@ -67,11 +63,10 @@ export const rikishiInfoSlice = createSlice({
   },
 });
 
-export const selectRikishiList = (state) =>
-  Object.keys(state.rikishiInfo.data || {});
+export const selectRikishiInfo = (state) => state.rikishiInfo.data;
 
-export const selectRikishiListStatus = (state) => state.rikishiInfo.status;
+export const selectRikishiInfoStatus = (state) => state.rikishiInfo.status;
 
-export const selectRikishiListErrorMsg = (state) => state.rikishiInfo.errorMsg;
+export const selectRikishiInfoErrorMsg = (state) => state.rikishiInfo.errorMsg;
 
 export default rikishiInfoSlice.reducer;

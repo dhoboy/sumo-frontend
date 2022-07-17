@@ -3,6 +3,8 @@
   --black: #000;
 	--gray-black: #333;
 	--text-black: #333;
+  --background-white: #eee;
+  --hover-light-gray: #ccc;
 	--sun-yellow: #fed976;
 	--moon-blue: #a6bddb;
   --moon-blue-dark: #1A447A;
@@ -27,6 +29,8 @@
     --color-background: var(--background-gray-dk);
     --color-background-soft: var(--background-md-gray-dk);
     --color-heading-background: var(--header-dk);
+    --color-input-background: var(--background-white);
+    --color-input-hover: var(--hover-light-gray);
     --color-text: var(--text-gray-dk);
     --color-anchor: var(--red-dk);
     --color-active: var(--moon-blue-dark);

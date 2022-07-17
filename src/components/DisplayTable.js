@@ -22,6 +22,7 @@ const DisplayTable = ({ headers, data, canSort = false }) => {
   };
 
   // sorts by strings, numbers, and dates; default sort is by strings
+  // date sort takes in either date strings or date objects
   const displayData = sort
     ? data.sort((a, b) => {
         const header = headers.find((h) => h.colKey === sort);
@@ -34,8 +35,8 @@ const DisplayTable = ({ headers, data, canSort = false }) => {
         if (sortType === "number") {
           return dir === "asc" ? aVal - bVal : bVal - aVal;
         } else if (sortType === "date") {
-          const aDate = new Date(aVal);
-          const bDate = new Date(bVal);
+          const aDate = aVal instanceof Date ? aVal : new Date(aVal);
+          const bDate = bVal instanceof Date ? bVal : new Date(bVal);
           return dir === "asc" ? aDate - bDate : bDate - aDate;
         } else {
           return dir === "asc"

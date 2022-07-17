@@ -45,6 +45,9 @@ export const tournamentDatesSlice = createSlice({
 
 export const selectTournamentDates = (state) => state.tournamentDates.data;
 
+export const selectLatestTournament = (state) =>
+  state.tournamentDates.data?.[0];
+
 export const selectTournamentDatesStatus = (state) =>
   state.tournamentDates.status;
 
