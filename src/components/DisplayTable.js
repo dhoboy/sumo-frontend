@@ -1,24 +1,27 @@
 import React from "react";
+import { useSelector, shallowEqual } from "react-redux";
 import PropTypes from "prop-types";
-import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { selectRikishiPhotos } from "../stores/rikishiInfoSlice";
 import styles from "./styles/DisplayTable.module.css";
 
 const prop_info = {
   headers: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   canSort: PropTypes.bool, // pass true if the table is allowed to sort
+  withPhoto: PropTypes.bool, // if photo should be drawn with rikishi name columns (name, east, west)
 };
 
-const DisplayTable = ({ headers, data, canSort = false }) => {
+const DisplayTable = ({ headers, data, canSort = false, withPhoto = true }) => {
+  const rikishiPhotos = useSelector(selectRikishiPhotos, shallowEqual);
   const [searchParams, setSearchParams] = useSearchParams();
   const sort = canSort ? searchParams.get("sort") || "rank_value" : false;
   const dir = searchParams.get("dir") || "desc"; // or asc
 
   const onHeaderClick = (colKey) => {
-    setSearchParams({
-      sort: colKey,
-      dir: dir === "asc" ? "desc" : "asc",
-    });
+    searchParams.set("sort", colKey);
+    searchParams.set("dir", dir === "asc" ? "desc" : "asc");
+    setSearchParams(searchParams);
   };
 
   // sorts by strings, numbers, and dates; default sort is by strings
@@ -82,13 +85,23 @@ const DisplayTable = ({ headers, data, canSort = false }) => {
                   if (linkFn) linkFn(entry[colKey]);
                 };
 
+                const imageUrl = rikishiPhotos?.[entry[colKey]] || null;
+                const drawPhoto = withPhoto && imageUrl;
+
                 return (
                   <td
                     onClick={handleClick}
-                    className={styles.td}
+                    className={`${styles.td} ${
+                      drawPhoto ? styles.withImage : ""
+                    } ${linkFn ? styles.clickable : ""}`}
                     key={`td-${j}`}
                   >
-                    {entry[colKey]}
+                    {drawPhoto ? (
+                      <img src={imageUrl} alt="rikishi" loading="lazy" />
+                    ) : null}
+                    <span className={linkFn ? styles.clickable : ""}>
+                      {entry[colKey]}
+                    </span>
                   </td>
                 );
               })}

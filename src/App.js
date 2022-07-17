@@ -5,10 +5,16 @@ import {
   selectTournamentDates,
   selectTournamentDatesStatus,
 } from "./stores/tournamentDatesSlice.js";
-import { SUCCESS } from "./constants.js";
+import {
+  fetchRikishiList,
+  selectRikishiInfo,
+  selectRikishiInfoStatus,
+} from "./stores/rikishiInfoSlice.js";
+import { LOADING, SUCCESS } from "./constants.js";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import RikishiList from "./features/rikishiList/RikishiList";
+import RikishiDetail from "./features/rikishiDetail/RikishiDetail";
 import TournamentList from "./features/tournamentList/TournamentList";
 import TournamentBoutDetail from "./features/tournamentBoutDetail/TournamentBoutDetail";
 import Matchups from "./features/matchups/Matchups";
@@ -22,12 +28,32 @@ const App = () => {
     shallowEqual
   );
 
-  // multiple views pages need this, so get it at app level
+  const rikishiInfo = useSelector((state) => selectRikishiInfo(state) ?? {});
+  const rikishiInfoStatus = useSelector((state) =>
+    selectRikishiInfoStatus(state)
+  );
+
+  // multiple views need these
+  // if no data, and its not currently loading, call for the data
   useEffect(() => {
-    if (tournamentDatesStatus !== SUCCESS && !tournamentDates.length) {
+    if (
+      tournamentDatesStatus !== SUCCESS &&
+      tournamentDatesStatus !== LOADING &&
+      !tournamentDates.length
+    ) {
       dispatch(fetchTournamentDates());
     }
   }, [dispatch, tournamentDatesStatus, tournamentDates]);
+
+  useEffect(() => {
+    if (
+      rikishiInfoStatus !== SUCCESS &&
+      rikishiInfoStatus !== LOADING &&
+      !Object.keys(rikishiInfo).length
+    ) {
+      dispatch(fetchRikishiList());
+    }
+  }, [dispatch, rikishiInfo, rikishiInfoStatus]);
 
   return (
     <div id="app">
@@ -36,6 +62,7 @@ const App = () => {
         {/* Rikishi */}
         <Route path="/" element={<RikishiList />} />
         <Route path="rikishi" element={<RikishiList />} />
+        <Route path="rikishi/:name" element={<RikishiDetail />} />
 
         {/* Tournaments TODO: add a redirect for tournaments/:year/:month to go to day 1 */}
         <Route path="tournaments" element={<TournamentList />} />

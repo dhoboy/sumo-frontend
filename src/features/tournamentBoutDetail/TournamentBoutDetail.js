@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IDLE, LOADING, SUCCESS, FAILED } from "../../constants.js";
+import { LOADING } from "../../constants.js";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import DisplayTable from "../../components/DisplayTable.js";
 import Loader from "../../components/Loader";
@@ -16,7 +16,8 @@ import styles from "./TournamentBoutDetail.module.css";
 const TournamentBoutDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const { year, month, day } = params;
 
   const status = useSelector((state) =>
@@ -51,7 +52,7 @@ const TournamentBoutDetail = () => {
       colKey: "east",
       display: "East",
       sortType: "string",
-      linkFn: (name) => `/rikishi/${name}`,
+      linkFn: (name) => navigate(`/rikishi/${name}`),
     },
     {
       colKey: "east_rank",
@@ -63,7 +64,7 @@ const TournamentBoutDetail = () => {
       colKey: "west",
       display: "West",
       sortType: "string",
-      linkFn: (name) => `/rikishi/${name}`,
+      linkFn: (name) => navigate(`/rikishi/${name}`),
     },
     {
       colKey: "west_rank",
@@ -75,7 +76,7 @@ const TournamentBoutDetail = () => {
       colKey: "winner",
       display: "Winner",
       sortType: "string",
-      linkFn: (name) => `/rikishi/${name}`,
+      linkFn: (name) => navigate(`/rikishi/${name}`),
     },
     {
       colKey: "technique",
@@ -84,12 +85,12 @@ const TournamentBoutDetail = () => {
     },
     {
       colKey: "technique_en",
-      display: "Technique Description",
+      display: "Tech. Description",
       sortType: "string",
     },
     {
       colKey: "technique_category",
-      display: "Technique Category",
+      display: "Tech. Category",
       sortType: "string",
     },
     /* { colKey: "is_playoff", display: "Playoff Match", sortType: "string" }, */

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { IDLE, LOADING, SUCCESS, FAILED } from "../../constants.js";
 import {
   fetchRikishiList,
@@ -14,35 +15,30 @@ import DisplayTable from "../../components/DisplayTable";
 import Checkbox from "../../components/Checkbox";
 import styles from "./RikishiList.module.css";
 
-const initialState = {
-  text: "",
-  yokozuna: false,
-  active: true,
+const makeBool = (val) => {
+  if (val === "true") return true;
+  return false;
 };
 
 const RikishiList = () => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const status = useSelector((state) => selectRikishiInfoStatus(state));
+  const status = useSelector(selectRikishiInfoStatus, shallowEqual);
   const data = useSelector((state) => selectRikishiInfo(state) ?? {});
-  const errorMsg = useSelector((state) => selectRikishiInfoErrorMsg(state));
-  const latestTournament = useSelector(selectLatestTournament);
+  const errorMsg = useSelector(selectRikishiInfoErrorMsg);
+  const latestTournament = useSelector(selectLatestTournament, shallowEqual);
 
-  const [filters, setFilters] = useState(initialState);
-
-  useEffect(() => {
-    // TODO: check if data is still being fetched twice
-    if (!Object.keys(data).length && status === IDLE) {
-      dispatch(fetchRikishiList());
-    }
-  }, [data, dispatch, status]);
+  const searchText = searchParams.get("searchText") || "";
+  const active = makeBool(searchParams.get("active"));
+  const yokozuna = makeBool(searchParams.get("yokozuna"));
 
   const headers = [
     {
       colKey: "name",
       display: "Name",
       sortType: "string",
-      linkFn: (name) => `/rikishi/${name}`,
+      linkFn: (name) => navigate(`/rikishi/${name}`),
     },
     {
       colKey: "rank",
@@ -59,17 +55,37 @@ const RikishiList = () => {
   ];
 
   const handleTextChange = (e) => {
-    setFilters({
-      ...filters,
-      text: e.target.value,
-    });
+    if (e.target.value.trim() === "") {
+      searchParams.delete("searchText");
+    } else {
+      searchParams.set("searchText", e.target.value);
+    }
+    setSearchParams(searchParams);
   };
 
   const handleCheckboxChange = (filterKey) => {
-    setFilters({
-      ...filters,
-      [filterKey]: !filters[filterKey],
-    });
+    let nextVal;
+
+    switch (filterKey) {
+      case "active":
+        nextVal = !active;
+        break;
+      case "yokozuna":
+        nextVal = !yokozuna;
+        break;
+      default:
+        nextVal = false;
+        break;
+    }
+
+    // only track true checkbox values in searchParams
+    if (nextVal === true) {
+      searchParams.set(filterKey, nextVal);
+    } else {
+      searchParams.delete(filterKey);
+    }
+
+    setSearchParams(searchParams);
   };
 
   // flatten over ambitious nesting I added on the clojure side
@@ -90,11 +106,10 @@ const RikishiList = () => {
     .filter(({ name, rank, tournament_date }) => {
       // build clause based on user entered filter selections
       let clause = true;
-      const { text, active, yokozuna } = filters;
 
-      if (text.length) {
+      if (searchText.length) {
         // only options that start with user-entered text, case insensitive
-        const regex = new RegExp(`^${text}`, "i");
+        const regex = new RegExp(`^${searchText}`, "i");
         clause = clause && regex.test(name);
       }
 
@@ -130,13 +145,13 @@ const RikishiList = () => {
           <Checkbox
             filterKey="active"
             label="Active Last Tournament"
-            checked={filters.active}
+            checked={active}
             onChange={handleCheckboxChange}
           />
           <Checkbox
             filterKey="yokozuna"
             label="Yokozuna"
-            checked={filters.yokozuna}
+            checked={yokozuna}
             onChange={handleCheckboxChange}
           />
         </div>

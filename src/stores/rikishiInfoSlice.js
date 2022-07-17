@@ -65,6 +65,13 @@ export const rikishiInfoSlice = createSlice({
 
 export const selectRikishiInfo = (state) => state.rikishiInfo.data;
 
+export const selectRikishiPhotos = (state) =>
+  Object.keys(state.rikishiInfo.data).reduce((acc, next) => {
+    const { image } = state.rikishiInfo.data[next];
+    acc[next] = image ? `https://www3.nhk.or.jp${image}` : null;
+    return acc;
+  }, {});
+
 export const selectRikishiInfoStatus = (state) => state.rikishiInfo.status;
 
 export const selectRikishiInfoErrorMsg = (state) => state.rikishiInfo.errorMsg;

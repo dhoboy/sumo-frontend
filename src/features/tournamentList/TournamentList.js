@@ -1,44 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { useParams, useSearchParams, useNavigate } from "react-router-dom";
-import { IDLE, LOADING, SUCCESS, FAILED } from "../../constants.js";
-import {
-  fetchTournamentDates,
-  selectTournamentDates,
-  selectTournamentDatesStatus,
-  selectTournamentDatesErrorMsg,
-} from "../../stores/tournamentDatesSlice.js";
+import React, { useEffect } from "react";
+import { useSelector, shallowEqual } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { selectTournamentDates } from "../../stores/tournamentDatesSlice.js";
 import RikishiTournamentSummary from "../../components/RikishiTournamentSummary";
 import Pagination from "../../components/Pagination";
 import styles from "./TournamentList.module.css";
 
-// TODO: Should TournamentSummary be a separate component?
-// Need to get the summmary data of each tournament shows in
-// tournament list. do i get that data here?
 const TournamentList = () => {
-  const dispatch = useDispatch();
-  const params = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const tournamentDates = useSelector(selectTournamentDates, shallowEqual);
-  // const status = useSelector(selectTournamentDatesStatus, shallowEqual);
-  // const errorMsg = useSelector(selectTournamentDatesErrorMsg, shallowEqual);
 
   const page = searchParams.get("page");
   const per = 5;
   const totalPages = Math.ceil(tournamentDates.length / per);
 
-  console.log("tournamentDates: ", tournamentDates);
-
   useEffect(() => {
-    if (!page) setSearchParams({ page: 1 });
-  }, [page, setSearchParams]);
+    if (!page) {
+      searchParams.set("page", 1);
+      setSearchParams(searchParams);
+    }
+  }, [page, searchParams, setSearchParams]);
 
   const changePage = (p) => {
-    setSearchParams({ page: p });
+    searchParams.set("page", p);
+    setSearchParams(searchParams);
   };
-
-  const name = "TODO";
 
   return (
     <div className={styles.wrapper}>

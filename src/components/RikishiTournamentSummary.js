@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { IDLE, LOADING, SUCCESS, FAILED } from "../constants.js";
+import { LOADING } from "../constants.js";
 import DisplayTable from "../components/DisplayTable";
 import PropTypes from "prop-types";
 import Loader from "../components/Loader";
@@ -21,6 +21,8 @@ const prop_info = {
 
 const RikishiTournamentSummary = ({ year, month }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const status = useSelector((state) =>
     selectTournamentSummaryStatus(state, { year, month })
   );
@@ -31,6 +33,7 @@ const RikishiTournamentSummary = ({ year, month }) => {
     selectTournamentSummary(state, { year, month })
   );
 
+  // TODO: Update to add status condition here
   useEffect(() => {
     if (!data) dispatch(fetchTournamentSummary({ year, month }));
   }, [data, dispatch, month, year]);
@@ -45,7 +48,7 @@ const RikishiTournamentSummary = ({ year, month }) => {
       colKey: "rikishi",
       display: "Rikishi",
       sortType: "string",
-      linkFn: (name) => console.log(`/rikishi/${name}`),
+      linkFn: (name) => navigate(`/rikishi/${name}`),
     },
     {
       colKey: "rank",
