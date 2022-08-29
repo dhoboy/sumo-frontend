@@ -15,7 +15,9 @@ export const fetchTournamentDates = createAsyncThunk(
   "tournamentDates/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      const resp = await axios.get("http://localhost:3005/tournament/list");
+      // consider using 127.0.0.1 instead of "localhost" here
+      // const resp = await axios.get("heroku.app.name/tournament/list");
+      const resp = await axios.get("http://127.0.0.1:3005/tournament/list");
       return resp.data?.items;
     } catch ({ status, message }) {
       return rejectWithValue(message);

@@ -1,9 +1,40 @@
 .wrapper {
   height: 80%;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.filters {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 25px 25px 25px 0;
+  font-size: 16px;
+}
+
+.filters label {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.filters label span {
+  padding-right: 10px;
+}
+
+.filters label input {
+  width: 300px;
+  background-color: var(--color-input-background);
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--gray-black);
+}
+
+.filters label input:hover {
+  background-color: var(--color-input-hover);
 }
 
 /* .tournamentList { */

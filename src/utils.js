@@ -11,4 +11,10 @@ export const monthMap = {
   July: 7,
   September: 9,
   November: 11,
+  january: 1,
+  march: 3,
+  may: 5,
+  july: 7,
+  september: 9,
+  november: 11,
 };

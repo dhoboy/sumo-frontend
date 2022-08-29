@@ -17,7 +17,7 @@ export const fetchTournamentSummary = createAsyncThunk(
   "rikishiTournamentSummary/fetch",
   async ({ year, month }, { rejectWithValue }) => {
     try {
-      const url = `http://localhost:3005/tournament/details/${year}/${month}`;
+      const url = `http://127.0.0.1:3005/tournament/details/${year}/${month}`;
       const resp = await axios.get(url);
       return { key: `${year}-${month}`, data: resp.data.items };
     } catch ({ status, message }) {

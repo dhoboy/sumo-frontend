@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { IDLE, LOADING, SUCCESS, FAILED } from "../../constants.js";
 import {
   fetchRikishiList,
-  selectRikishiInfo,
+  selectRikishiBaseInfo,
   selectRikishiInfoStatus,
   selectRikishiInfoErrorMsg,
 } from "../../stores/rikishiInfoSlice";
@@ -25,7 +25,7 @@ const RikishiList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const status = useSelector(selectRikishiInfoStatus, shallowEqual);
-  const data = useSelector((state) => selectRikishiInfo(state) ?? {});
+  const data = useSelector((state) => selectRikishiBaseInfo(state) ?? {});
   const errorMsg = useSelector(selectRikishiInfoErrorMsg);
   const latestTournament = useSelector(selectLatestTournament, shallowEqual);
 
@@ -139,7 +139,11 @@ const RikishiList = () => {
       <div className={styles.filters}>
         <label className={styles.search}>
           <span>Search by Name</span>
-          <input onChange={handleTextChange} className={styles.input} />
+          <input
+            onChange={handleTextChange}
+            value={searchText}
+            className={styles.input}
+          />
         </label>
         <div className={styles.checkboxes}>
           <Checkbox

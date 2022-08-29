@@ -23,9 +23,11 @@ const TournamentBoutDetail = () => {
   const status = useSelector((state) =>
     selectTournamentBoutDetailStatus(state, { year, month })
   );
+
   const data = useSelector((state) =>
     selectTournamentBoutDetail(state, { year, month })
   );
+
   const errorMsg = useSelector((state) =>
     selectTournamentBoutDetailErrorMsg(state, { year, month })
   );

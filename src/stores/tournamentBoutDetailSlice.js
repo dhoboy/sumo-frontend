@@ -17,9 +17,10 @@ export const fetchTournamentBoutDetail = createAsyncThunk(
   "tournamentBoutDetail/fetch",
   async ({ year, month }, { rejectWithValue }) => {
     try {
-      const url = `http://localhost:3005/bout/list?year=${year}&month=${month}`;
+      const url = `http://127.0.0.1:3005/bout/list?year=${year}&month=${month}`;
       const resp = await axios.get(url);
-      return { key: `${year}-${month}`, data: resp.data };
+      console.log("bout list resp: ", resp);
+      return { key: `${year}-${month}`, data: resp?.data?.items || [] };
     } catch ({ status, message }) {
       return rejectWithValue(message);
     }

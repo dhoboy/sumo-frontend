@@ -7,10 +7,10 @@ import {
 } from "./stores/tournamentDatesSlice.js";
 import {
   fetchRikishiList,
-  selectRikishiInfo,
+  selectRikishiBaseInfo,
   selectRikishiInfoStatus,
 } from "./stores/rikishiInfoSlice.js";
-import { LOADING, SUCCESS } from "./constants.js";
+import { IDLE } from "./constants.js";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import RikishiList from "./features/rikishiList/RikishiList";
@@ -22,13 +22,10 @@ import "@fortawesome/fontawesome-free/js/all.js";
 
 const App = () => {
   const dispatch = useDispatch();
-  const tournamentDates = useSelector(selectTournamentDates, shallowEqual);
-  const tournamentDatesStatus = useSelector(
-    selectTournamentDatesStatus,
-    shallowEqual
-  );
+  const tournamentDates = useSelector(selectTournamentDates);
+  const tournamentDatesStatus = useSelector(selectTournamentDatesStatus);
 
-  const rikishiInfo = useSelector((state) => selectRikishiInfo(state) ?? {});
+  const rikishiInfo = useSelector((state) => selectRikishiBaseInfo(state));
   const rikishiInfoStatus = useSelector((state) =>
     selectRikishiInfoStatus(state)
   );
@@ -36,21 +33,13 @@ const App = () => {
   // multiple views need these
   // if no data, and its not currently loading, call for the data
   useEffect(() => {
-    if (
-      tournamentDatesStatus !== SUCCESS &&
-      tournamentDatesStatus !== LOADING &&
-      !tournamentDates.length
-    ) {
+    if (tournamentDatesStatus === IDLE) {
       dispatch(fetchTournamentDates());
     }
   }, [dispatch, tournamentDatesStatus, tournamentDates]);
 
   useEffect(() => {
-    if (
-      rikishiInfoStatus !== SUCCESS &&
-      rikishiInfoStatus !== LOADING &&
-      !Object.keys(rikishiInfo).length
-    ) {
+    if (rikishiInfoStatus === IDLE) {
       dispatch(fetchRikishiList());
     }
   }, [dispatch, rikishiInfo, rikishiInfoStatus]);

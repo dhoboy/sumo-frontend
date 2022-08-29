@@ -4,7 +4,7 @@ import axios from "axios";
 
 /*
  * Slice contains info about Rikishi
- * data: {
+ * base: {
  *   ENDO: {
  *     id,
  *     image,
@@ -13,30 +13,50 @@ import axios from "axios";
  *     rank: {
  *       rank,
  *       rankValue,
- *       tournament: { year, month }}
+ *       tournament: { year, month },
+ *     }
  *   },
  *   TAKAKEISHO: {}, ...
  * }
  */
+
+// TODO: Consider re-organizing this to be like:
+// data: { ENDO: { base: {}, rankOverTime: {}, .... }
+
 const initialState = {
   status: IDLE,
-  data: {},
+  base: {},
+  rankOverTime: {},
+  techniqueBreakdown: {},
   errorMsg: "",
 };
 
 export const fetchRikishiList = createAsyncThunk(
   "rikishiInfo/fetchList",
-  async (state, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const url = `http://localhost:3005/rikishi/list`;
+      const url = `http://127.0.0.1:3005/rikishi/list`;
       const resp = await axios.get(url);
 
       return {
-        data: resp.data?.items.reduce((acc, next) => {
+        base: resp.data?.items.reduce((acc, next) => {
           acc[next.name] = next;
           return acc;
         }, {}),
       };
+    } catch ({ status, message }) {
+      return rejectWithValue(message);
+    }
+  }
+);
+
+export const fetchRikishiRankOverTime = createAsyncThunk(
+  "rikishiInfo/fetchRankOverTime",
+  async ({ name }, { rejectWithValue }) => {
+    try {
+      const url = `/rank_over_time/${name}`;
+      const resp = await axios.get(url);
+      console.log("resp: ", resp);
     } catch ({ status, message }) {
       return rejectWithValue(message);
     }
@@ -54,7 +74,7 @@ export const rikishiInfoSlice = createSlice({
       })
       .addCase(fetchRikishiList.fulfilled, (state, action) => {
         state.status = SUCCESS;
-        state.data = action.payload.data;
+        state.base = action.payload.base;
       })
       .addCase(fetchRikishiList.rejected, (state, action) => {
         state.status = FAILED;
@@ -63,11 +83,11 @@ export const rikishiInfoSlice = createSlice({
   },
 });
 
-export const selectRikishiInfo = (state) => state.rikishiInfo.data;
+export const selectRikishiBaseInfo = (state) => state.rikishiInfo.base;
 
 export const selectRikishiPhotos = (state) =>
-  Object.keys(state.rikishiInfo.data).reduce((acc, next) => {
-    const { image } = state.rikishiInfo.data[next];
+  Object.keys(state.rikishiInfo.base).reduce((acc, next) => {
+    const { image } = state.rikishiInfo.base[next];
     acc[next] = image ? `https://www3.nhk.or.jp${image}` : null;
     return acc;
   }, {});

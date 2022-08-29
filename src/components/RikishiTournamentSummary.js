@@ -17,9 +17,10 @@ import {
 const prop_info = {
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
+  rikishiSearchText: PropTypes.string, // optional filter text of rikishi to show
 };
 
-const RikishiTournamentSummary = ({ year, month }) => {
+const RikishiTournamentSummary = ({ year, month, rikishiSearchText = "" }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,10 +39,15 @@ const RikishiTournamentSummary = ({ year, month }) => {
     if (!data) dispatch(fetchTournamentSummary({ year, month }));
   }, [data, dispatch, month, year]);
 
-  const tableReadyData = (data || []).map((d) => ({
-    ...d,
-    ...d.results,
-  }));
+  const tableReadyData = (data || [])
+    .map((d) => ({
+      ...d,
+      ...d.results,
+    }))
+    .filter(({ rikishi }) => {
+      const regex = new RegExp(`^${rikishiSearchText}`, "i");
+      return regex.test(rikishi);
+    });
 
   const headers = [
     {
@@ -56,9 +62,21 @@ const RikishiTournamentSummary = ({ year, month }) => {
       sortKey: "rank_value",
       sortType: "number",
     },
-    { colKey: "wins", display: "Wins", sortType: "number" },
-    { colKey: "losses", display: "Losses", sortType: "number" },
-    { colKey: "result", display: "Result", sortType: "string" },
+    {
+      colKey: "wins",
+      display: "Wins",
+      sortType: "number",
+    },
+    {
+      colKey: "losses",
+      display: "Losses",
+      sortType: "number",
+    },
+    {
+      colKey: "result",
+      display: "Result",
+      sortType: "string",
+    },
   ];
 
   return (
@@ -70,7 +88,7 @@ const RikishiTournamentSummary = ({ year, month }) => {
           </Link>
         </h3>
         <div className={styles.tableWrapper}>
-          <DisplayTable headers={headers} data={tableReadyData} />
+          <DisplayTable headers={headers} data={tableReadyData} canSort />
         </div>
       </div>
     </Loader>
