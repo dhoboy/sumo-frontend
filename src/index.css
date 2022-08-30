@@ -15,6 +15,12 @@
   --visited-link: pink;
   --selected-item: #869cfa;
   --active-green: hsla(160, 100%, 37%, 0.2);
+
+  --force: #e41a1c;
+  --push: #33a02c;
+  --dodge: #377eb8;
+  --throw: #984ea3;
+  --default: #252525;
 }
 
 /* semantic color variables for this project */

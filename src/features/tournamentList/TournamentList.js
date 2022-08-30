@@ -96,7 +96,7 @@ const TournamentList = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <>
       <div className={styles.filters}>
         <label>
           <span>Search by Name</span>
@@ -115,26 +115,34 @@ const TournamentList = () => {
           onChange={onMonthChange}
         />
       </div>
-      <div className={styles.tournamentList}>
-        {filteredTournamentDates
-          .slice((page - 1) * per, page * per - 1)
-          .map(({ year, month }) => {
-            return (
-              <RikishiTournamentSummary
-                key={`${year}-${month}`}
-                year={year}
-                month={month}
-                rikishiSearchText={rikishiSearchText}
-              />
-            );
-          })}
+      <div className={styles.wrapper}>
+        {filteredTournamentDates.length ? (
+          <>
+            <div>
+              {filteredTournamentDates
+                .slice((page - 1) * per, page * per - 1)
+                .map(({ year, month }) => {
+                  return (
+                    <RikishiTournamentSummary
+                      key={`${year}-${month}`}
+                      year={year}
+                      month={month}
+                      rikishiSearchText={rikishiSearchText}
+                    />
+                  );
+                })}
+            </div>
+            <Pagination
+              currentPage={+page}
+              totalPages={+totalPages}
+              changePage={changePage}
+            />
+          </>
+        ) : (
+          <p className={styles.not_found}>Tournament not found</p>
+        )}
       </div>
-      <Pagination
-        currentPage={+page}
-        totalPages={+totalPages}
-        changePage={changePage}
-      />
-    </div>
+    </>
   );
 };
 

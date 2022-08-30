@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import PropTypes from "prop-types";
 import { useSearchParams } from "react-router-dom";
-import { selectRikishiPhotos } from "../stores/rikishiInfoSlice";
+import { selectRikishiPhotos } from "../stores/rikishiBaseInfoSlice";
 import styles from "./styles/DisplayTable.module.css";
 
 const prop_info = {

@@ -1,0 +1,19 @@
+.container {
+  padding: 25px;
+}
+
+.info {
+  width: 20%;
+}
+
+.technique_breakdown {
+  width: 80%;
+}
+
+.headshot {
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+  border: 2px solid;
+  margin-right: 10px;
+}

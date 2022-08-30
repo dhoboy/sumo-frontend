@@ -7,9 +7,9 @@ import {
 } from "./stores/tournamentDatesSlice.js";
 import {
   fetchRikishiList,
-  selectRikishiBaseInfo,
-  selectRikishiInfoStatus,
-} from "./stores/rikishiInfoSlice.js";
+  selectAllRikishiBaseInfo,
+  selectRikishiBaseInfoStatus,
+} from "./stores/rikishiBaseInfoSlice.js";
 import { IDLE } from "./constants.js";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
@@ -25,9 +25,11 @@ const App = () => {
   const tournamentDates = useSelector(selectTournamentDates);
   const tournamentDatesStatus = useSelector(selectTournamentDatesStatus);
 
-  const rikishiInfo = useSelector((state) => selectRikishiBaseInfo(state));
-  const rikishiInfoStatus = useSelector((state) =>
-    selectRikishiInfoStatus(state)
+  const allRikishiBaseInfo = useSelector((state) =>
+    selectAllRikishiBaseInfo(state)
+  );
+  const rikishiBaseInfoStatus = useSelector((state) =>
+    selectRikishiBaseInfoStatus(state)
   );
 
   // multiple views need these
@@ -39,10 +41,10 @@ const App = () => {
   }, [dispatch, tournamentDatesStatus, tournamentDates]);
 
   useEffect(() => {
-    if (rikishiInfoStatus === IDLE) {
+    if (rikishiBaseInfoStatus === IDLE) {
       dispatch(fetchRikishiList());
     }
-  }, [dispatch, rikishiInfo, rikishiInfoStatus]);
+  }, [dispatch, allRikishiBaseInfo, rikishiBaseInfoStatus]);
 
   return (
     <div id="app">

@@ -2,7 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "../features/counter/counterSlice";
 import tournamentDatesReducer from "./tournamentDatesSlice";
 import tournamentBoutDetailReducer from "./tournamentBoutDetailSlice";
-import rikishiInfoReducer from "./rikishiInfoSlice";
+import rikishiBaseInfoReducer from "./rikishiBaseInfoSlice";
+import rikishiRankOverTimeReducer from "./rikishiRankOverTimeSlice";
+import rikishiTechniqueBreakdownReducer from "./rikishiTechniqueBreakdownSlice";
 import rikishiTournamentSummaryReducer from "./rikishiTournamentSummarySlice";
 
 export const store = configureStore({
@@ -10,7 +12,9 @@ export const store = configureStore({
     counter: counterReducer,
     tournamentDates: tournamentDatesReducer,
     tournamentBoutDetail: tournamentBoutDetailReducer,
-    rikishiInfo: rikishiInfoReducer,
+    rikishiBaseInfo: rikishiBaseInfoReducer,
+    rikishiRankOverTime: rikishiRankOverTimeReducer,
+    rikishiTechniqueBreakdown: rikishiTechniqueBreakdownReducer,
     rikishiTournamentSummary: rikishiTournamentSummaryReducer,
   },
 });

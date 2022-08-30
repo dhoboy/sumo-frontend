@@ -1,5 +1,9 @@
 .wrapper {
+  height: 70%;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .filters {

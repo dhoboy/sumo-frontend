@@ -1,0 +1,26 @@
+.technique_breakdown_table {
+}
+
+.technique_category {
+  border-radius: 4px;
+}
+
+.force {
+  background-color: var(--force);
+}
+
+.push {
+  background-color: var(--push);
+}
+
+.dodge {
+  background-color: var(--dodge);
+}
+
+.throw {
+  background-color: var(--throw);
+}
+
+.default {
+  background-color: var(--default);
+}
