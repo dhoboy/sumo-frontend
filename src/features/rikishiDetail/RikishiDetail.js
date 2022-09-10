@@ -3,22 +3,23 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   selectRikishiBaseInfo,
-  selectRikishiBaseInfoStatus,
-  selectRikishiBaseInfoErrorMsg,
+  // selectRikishiBaseInfoStatus,
+  // selectRikishiBaseInfoErrorMsg,
 } from "../../stores/rikishiBaseInfoSlice";
 import {
   fetchRikishiRankOverTime,
   selectRikishiRankOverTime,
-  selectRikishiRankOverTimeStatus,
-  selectRikishiRankOverTimeErrorMsg,
+  // selectRikishiRankOverTimeStatus,
+  // selectRikishiRankOverTimeErrorMsg,
 } from "../../stores/rikishiRankOverTimeSlice";
 import {
   fetchRikishiTechniqueBreakdown,
   selectRikishiTechniqueBreakdown,
-  selectRikishiTechniqueBreakdownStatus,
-  selectRikishiTechniqueBreakdownErrorMsg,
+  // selectRikishiTechniqueBreakdownStatus,
+  // selectRikishiTechniqueBreakdownErrorMsg,
 } from "../../stores/rikishiTechniqueBreakdownSlice";
 import TechniqueBreakdownTable from "../../components/TechniqueBreakdownTable";
+import TechniqueCategoryPieGraph from "../../components/TechniqueCategoryPieGraph";
 import { monthMap, formatPercent } from "../../utils";
 import styles from "./RikishiDetail.module.css";
 
@@ -49,8 +50,8 @@ const RikishiDetail = () => {
     (state) => selectRikishiRankOverTime(state, { rikishi: name }) ?? {}
   );
 
-  console.log("rankOverTime: ", rankOverTime);
-  console.log("rank: ", rank);
+  // console.log("rankOverTime: ", rankOverTime);
+  // console.log("rank: ", rank);
 
   // load rikishi data needed for this page
   useEffect(() => {
@@ -77,6 +78,7 @@ const RikishiDetail = () => {
           <div>
             <h3>Wins by Technique Category</h3>
             <TechniqueBreakdownTable data={wins_by_technique_category} />
+            <TechniqueCategoryPieGraph data={wins_by_technique_category} />
           </div>
           <div>
             <h3>Wins by Technique</h3>

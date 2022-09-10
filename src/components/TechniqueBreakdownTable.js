@@ -3,43 +3,47 @@ import { formatPercent } from "../utils";
 import styles from "./styles/TechniqueBreakdownTable.module.css";
 
 const TechniqueBreakdownTable = ({ data = {} }) => {
-  console.log("data: ", data);
   const headers = Object.keys(data?.[0] || {});
-  console.log("headers: ", headers);
   return (
     <table className={styles.technique_breakdown_table}>
       <thead>
-        {headers.map((header) => {
-          return (
-            <th key={header}>
-              {header
-                .split("_")
-                .map((word) =>
-                  word.charAt(0).toUpperCase().concat(word.slice(1))
-                )
-                .join(" ")}
-            </th>
-          );
-        })}
+        <tr>
+          {headers.map((header) => {
+            return (
+              <th key={header}>
+                {header
+                  .split("_")
+                  .map((word) =>
+                    word.charAt(0).toUpperCase().concat(word.slice(1))
+                  )
+                  .join(" ")}
+              </th>
+            );
+          })}
+        </tr>
       </thead>
       <tbody>
-        {data.map((entry, i) => {
+        {data.map((entry) => {
+          const keyBase = entry.technique || entry.technique_category;
           return (
-            <tr key={i}>
-              {headers.map((header) => {
+            <tr key={`${keyBase}-row`}>
+              {headers.map((header, j) => {
                 const value = entry[header];
                 if (header === "percent") {
-                  return <td>{formatPercent(value)}</td>;
+                  return (
+                    <td key={`${keyBase}-${j}`}>{formatPercent(value)}</td>
+                  );
                 } else if (header === "technique_category") {
                   return (
                     <td
+                      key={`${keyBase}-${j}`}
                       className={`${styles.technique_category} ${styles[value]}`}
                     >
                       {value}
                     </td>
                   );
                 } else {
-                  return <td>{value}</td>;
+                  return <td key={`${keyBase}-${j}`}>{value}</td>;
                 }
               })}
             </tr>
