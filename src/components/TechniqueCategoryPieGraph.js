@@ -59,7 +59,7 @@ const TechniqueCategoryPieGraph = ({ data }) => {
     }
 
     // Margin
-    const margin = { top: 150, right: 20, bottom: 150, left: 20 };
+    const margin = { top: 300, right: 20, bottom: 0, left: 20 };
     const adjustedWidth = width + margin.left + margin.right;
     const adjustedHeight = height + margin.top + margin.bottom;
 
@@ -74,7 +74,7 @@ const TechniqueCategoryPieGraph = ({ data }) => {
     const arcLabel = d3.arc().innerRadius(labelRadius).outerRadius(labelRadius);
 
     // Find the small arcs
-    const minArcSize = 0.3;
+    const minArcSize = 0.4;
     const smallArcs = arcs.filter(
       (d) => d.endAngle - d.startAngle <= minArcSize
     );
@@ -83,12 +83,12 @@ const TechniqueCategoryPieGraph = ({ data }) => {
       .select(graph.current)
       .append("svg")
       .attr("width", adjustedWidth)
-      .attr("height", adjustedHeight)
+      .attr("height", adjustedHeight - 100)
       .attr("viewBox", [
         -adjustedWidth / 2,
         -adjustedHeight / 2,
         adjustedWidth,
-        adjustedHeight,
+        adjustedHeight - 100,
       ])
       .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
@@ -116,9 +116,10 @@ const TechniqueCategoryPieGraph = ({ data }) => {
       .join("g")
       .attr("class", "small-arc-label")
       .attr("font-family", "sans-serif")
-      .attr("font-size", 18)
+      .attr("font-size", 15)
       .attr("text-anchor", "middle");
 
+    // dot in the small arc centroid
     smallArcLabels
       .append("circle")
       .attr("x", (d) => {
@@ -132,10 +133,13 @@ const TechniqueCategoryPieGraph = ({ data }) => {
       .attr("r", 3)
       .attr("fill", "#999");
 
+    // line from the dot to the label outside the graph
     smallArcLabels
       .append("path")
       .attr("d", (d) => {
         const centroidAngle = (d.startAngle + d.endAngle) / 2;
+        const arc = d3.arc().innerRadius(0).outerRadius(150);
+
         return arc({
           startAngle: centroidAngle,
           endAngle: centroidAngle,
@@ -144,11 +148,13 @@ const TechniqueCategoryPieGraph = ({ data }) => {
       .attr("stroke-width", 2)
       .attr("stroke", "#999");
 
+    // the label outside the graph
+    // these labels are drawn last, yet there are lines that overlap label text
     smallArcLabels
       .append("text")
       .attr("transform", (d) => {
         const [x, y] = arc.centroid(d);
-        return `translate(${x * 2.25},${y * 2.25})`;
+        return `translate(${x * 2},${y * 2})`;
       })
       .selectAll("tspan")
       .data((d) => {
@@ -158,23 +164,24 @@ const TechniqueCategoryPieGraph = ({ data }) => {
       .attr("x", 0)
       .attr("y", (_, i) => `${i}em`)
       .attr("font-weight", (_, i) => (i ? null : "bold"))
-      .attr("fill", "#000")
+      .attr("fill", "#ccc") // TODO: This needs to change based on light or dark color scheme
       .text((d) => {
         const formatted = d3.format(".2%")(d);
         if (formatted === "NaN%") return d;
         return formatted;
       });
 
-    smallArcLabels.attr("transform", (d) => {
+    // stagger the lines so the small labels dont overlap
+    smallArcLabels.attr("transform", (d, i) => {
       const [x, y] = arc.centroid(d);
-      return `translate(${x},${y})`;
+      return `translate(${x * (0.5 * (i + 1))},${y * (0.5 * (i + 1))})`;
     });
 
     // Big Arc Labels
     svg
       .append("g")
       .attr("font-family", "sans-serif")
-      .attr("font-size", 18)
+      .attr("font-size", 15)
       .attr("text-anchor", "middle")
       .selectAll("text")
       .data(arcs)
@@ -209,8 +216,8 @@ const TechniqueCategoryPieGraph = ({ data }) => {
         names: ["Force", "Push", "Dodge", "Throw", "Default"],
         colors: ["#e41a1c", "#33a02c", "#377eb8", "#984ea3", "#252525"],
         value: (d) => d.percent,
-        width: 400,
-        height: 400,
+        width: 350,
+        height: 350,
       });
     }
   }, [data]);

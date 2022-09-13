@@ -37,9 +37,11 @@ const TechniqueBreakdownTable = ({ data = {} }) => {
                   return (
                     <td
                       key={`${keyBase}-${j}`}
-                      className={`${styles.technique_category} ${styles[value]}`}
+                      className={`${styles.technique_category}`}
                     >
-                      {value}
+                      <div className={styles[value] || styles.uncategorized}>
+                        {value || "uncategorized"}
+                      </div>
                     </td>
                   );
                 } else {

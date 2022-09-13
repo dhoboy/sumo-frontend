@@ -1,8 +1,32 @@
 .technique_breakdown_table {
+  border-collapse: collapse;
 }
 
-.technique_category {
+.technique_breakdown_table tbody,
+.technique_breakdown_table thead {
+  text-align: left;
+}
+
+.technique_breakdown_table thead th {
+  border-bottom: 1px solid #ccc;
+}
+
+.technique_breakdown_table thead th,
+.technique_breakdown_table tbody td {
+  padding: 8px;
+}
+
+.technique_breakdown_table tr:nth-child(even) {
+  background-color: #222;
+}
+
+.technique_breakdown_table tbody tr:hover {
+  background-color: #222;
+}
+
+.technique_category div {
   border-radius: 4px;
+  text-align: center;
 }
 
 .force {
@@ -23,4 +47,8 @@
 
 .default {
   background-color: var(--default);
+}
+
+.uncategorized {
+  background-color: #666;
 }

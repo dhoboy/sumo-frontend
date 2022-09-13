@@ -1,0 +1,54 @@
+.tooltip {
+  background-color: #f7f7f7;
+  padding: 3px 12px;
+  font-size: 1rem;
+  font-family: sans-serif;
+  border: 1px solid #bbbbbb;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px #bbbbbb;
+}
+
+.tooltip h3 {
+  padding-top: 5px;
+}
+
+.tooltip h5 {
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid;
+}
+
+.tooltip p {
+  border-radius: 4px;
+  padding: 5px;
+  margin: 5px 0 0 0;
+}
+
+.tooltip p.force {
+  background-color: #e41a1c;
+  color: #fff;
+}
+
+.tooltip p.push {
+  background-color: #33a02c;
+  color: #fff;
+}
+
+.tooltip p.dodge {
+  background-color: #377eb8;
+  color: #fff;
+}
+
+.tooltip p.throw {
+  background-color: #984ea3;
+  color: #fff;
+}
+
+.tooltip p.default {
+  background-color: #252525;
+  color: #fff;
+}
+
+.tooltip p.uncategorized {
+  background-color: #ccc;
+}

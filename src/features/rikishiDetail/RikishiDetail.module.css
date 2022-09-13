@@ -6,14 +6,32 @@
   width: 20%;
 }
 
-.technique_breakdown {
-  width: 80%;
-}
-
 .headshot {
   width: 150px;
   height: 150px;
   border-radius: 100px;
   border: 2px solid;
   margin-right: 10px;
+}
+
+.technique_breakdown {
+  padding-top: 20px;
+}
+
+.breakdown_row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.breakdown_row:last-child {
+  padding-top: 25px;
+}
+
+.category {
+  text-align: center;
+}
+
+.technique h2 {
+  padding-bottom: 30px;
+  text-align: center;
 }
