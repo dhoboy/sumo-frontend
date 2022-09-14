@@ -24,6 +24,8 @@ import TechniqueBarGraph from "../../components/TechniqueBarGraph";
 import { monthMap, formatPercent } from "../../utils";
 import styles from "./RikishiDetail.module.css";
 
+// TODO: tidy this up with css grid
+//       get that image to not take so long to load?
 const RikishiDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();

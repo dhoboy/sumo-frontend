@@ -74,7 +74,7 @@ const TechniqueCategoryPieGraph = ({ data }) => {
     const arcLabel = d3.arc().innerRadius(labelRadius).outerRadius(labelRadius);
 
     // Find the small arcs
-    const minArcSize = 0.4;
+    const minArcSize = 0.45;
     const smallArcs = arcs.filter(
       (d) => d.endAngle - d.startAngle <= minArcSize
     );
