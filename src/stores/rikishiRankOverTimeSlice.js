@@ -30,7 +30,7 @@ export const fetchRikishiRankOverTime = createAsyncThunk(
       const resp = await axios.get(url);
       return {
         rikishi,
-        rankOverTime: resp.data.items,
+        rankOverTime: resp.data.items.filter((d) => d.rank_value !== null),
       };
     } catch ({ status, message }) {
       return rejectWithValue(message);

@@ -21,6 +21,7 @@ import {
 import TechniqueBreakdownTable from "../../components/TechniqueBreakdownTable";
 import TechniqueCategoryPieGraph from "../../components/TechniqueCategoryPieGraph";
 import TechniqueBarGraph from "../../components/TechniqueBarGraph";
+import RankOverTimeLineGraph from "../../components/RankOverTimeLineGraph";
 import { monthMap, formatPercent } from "../../utils";
 import styles from "./RikishiDetail.module.css";
 
@@ -86,6 +87,10 @@ const RikishiDetail = () => {
               }`}
             </p>
           </div>
+        </div>
+        <div className={styles.rank_over_time}>
+          <h2>Rank History</h2>
+          <RankOverTimeLineGraph data={rankOverTime} />
         </div>
       </header>
       <div className={styles.technique_breakdown}>

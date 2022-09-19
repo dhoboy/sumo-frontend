@@ -1,0 +1,23 @@
+/* body { */
+/*   font-family: sans-serif; */
+/* } */
+
+.tooltip {
+  background-color: #f7f7f7;
+  padding: 3px 12px;
+  font-size: 1rem;
+  font-family: sans-serif;
+  border: 1px solid #bbbbbb;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px #bbbbbb;
+}
+
+.tooltip h4 {
+  margin: 10px 0 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #000;
+}
+
+.tooltip p {
+  border-radius: 4px;
+}

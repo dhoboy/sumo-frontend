@@ -3,20 +3,33 @@
 }
 
 .container header {
+  display: flex;
+  justify-content: space-around;
   padding: 20px 0;
 }
 
 .info {
   width: 20%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .headshot {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: 100px;
   border: 2px solid;
-  margin-right: 10px;
+}
+
+.info h2 {
+  padding-top: 20px;
+}
+
+.rank_over_time h2 {
+  text-align: center;
 }
 
 .technique_breakdown {

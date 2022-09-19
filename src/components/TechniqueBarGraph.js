@@ -9,7 +9,7 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
   // Copyright 2021 Observable, Inc.
   // Released under the ISC license.
   // https://observablehq.com/@d3/bar-chart
-  function BarChart(
+  const BarChart = (
     data,
     {
       x = (d, i) => i, // given d in data, returns the (ordinal) x-value
@@ -31,7 +31,7 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
       yLabel, // a label for the y-axis
       color = "currentColor", // bar fill color
     } = {}
-  ) {
+  ) => {
     // Compute values.
     const X = d3.map(data, x);
     const Y = d3.map(data, y);
@@ -182,7 +182,7 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
           .select("text")
           .attr("transform", "translate(-10,20),rotate(-25)")
       );
-  }
+  };
 
   const drawGraph = useCallback(() => {
     // Good Ol' React/D3 integration drawing graphs too many times workaround

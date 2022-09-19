@@ -23,3 +23,34 @@ export const monthMap = {
 export const formatPercent = (num) => {
   return (num * 100).toFixed(2) + "%";
 };
+
+export const rankValueToName = {
+  1: "Yokozuna",
+  2: "Ozeki",
+  3: "Sekiwake",
+  4: "Komusubi",
+  5: "Maegashira #1",
+  6: "Maegashira #2",
+  7: "Maegashira #3",
+  8: "Maegashira #4",
+  9: "Maegashira #5",
+  10: "Maegashira #6",
+  11: "Maegashira #7",
+  12: "Maegashira #8",
+  13: "Maegashira #9",
+  14: "Maegashira #10",
+  15: "Maegashira #11",
+  16: "Maegashira #12",
+  17: "Maegashira #13",
+  18: "Maegashira #14",
+  19: "Maegashira #15",
+  20: "Maegashira #16",
+  21: "Maegashira #17",
+  22: "Maegashira #18",
+  23: "Juryo #1",
+  24: "Juryo #2",
+  25: "Juryo #3",
+  26: "Juryo #4",
+  // 27: "Juryo #5",
+  // 28: "Juryo #6",
+};
