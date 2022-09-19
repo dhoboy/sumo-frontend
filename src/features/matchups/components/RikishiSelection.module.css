@@ -1,0 +1,35 @@
+.rikishiSelection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.rikishiSelection input {
+  width: 150px;
+  margin: 5px;
+}
+
+.nameList {
+  height: 200px;
+  overflow: scroll;
+}
+
+.nameList .rikishiOption {
+  display: flex;
+  margin: 10px 0;
+  cursor: pointer;
+  width: min-content;
+}
+
+.nameList .rikishiOption p {
+  margin: auto 0;
+}
+
+.rikishiSelection img {
+  width: 50px;
+  height: 50px;
+  border-radius: 90px;
+  border: 2px solid;
+  margin-right: 10px;
+}

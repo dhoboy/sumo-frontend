@@ -1,0 +1,18 @@
+.wrapper {
+  padding: 25px;
+  height: 100%;
+}
+
+.ring {
+  display: flex;
+  justify-content: space-around;
+  border: 2px solid;
+  border-radius: 500px;
+  height: 80%;
+  width: 65%;
+  margin: auto;
+}
+
+.vs {
+  margin: auto 0;
+}

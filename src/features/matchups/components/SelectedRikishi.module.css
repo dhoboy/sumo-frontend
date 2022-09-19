@@ -1,0 +1,12 @@
+.selectedRikishi {
+  margin: auto 0;
+  text-align: center;
+}
+
+.selectedRikishi img {
+  width: 150px;
+  height: 150px;
+  border-radius: 90px;
+  border: 2px solid;
+  margin-right: 10px;
+}
