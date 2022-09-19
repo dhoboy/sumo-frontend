@@ -1,8 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOADING } from "../../constants.js";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import DisplayTable from "../../components/DisplayTable.js";
+import Dropdown from "../../components/Dropdown";
 import Loader from "../../components/Loader";
 import { monthMap } from "../../utils";
 import {
@@ -16,9 +22,20 @@ import styles from "./TournamentBoutDetail.module.css";
 const TournamentBoutDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const { year, month, day } = params;
+
+  const searchBy = searchParams.get("searchBy") || "name";
+  const searchText = searchParams.get("searchText") || "";
+
+  useEffect(() => {
+    if (!searchParams.get("searchBy")) {
+      searchParams.set("searchBy", "name");
+      setSearchParams(searchParams);
+    }
+  }, [searchBy, searchParams, setSearchParams]);
 
   const status = useSelector((state) =>
     selectTournamentBoutDetailStatus(state, { year, month })
@@ -36,18 +53,28 @@ const TournamentBoutDetail = () => {
     if (!data) dispatch(fetchTournamentBoutDetail({ year, month }));
   }, [data, dispatch, month, year]);
 
-  // this is breaking the back button
-  // useEffect(() => {
-  //   if (!day) navigate(`/tournaments/${year}/${month}/1`);
-  // }, [day, month, navigate, year]);
-  //
-
   // { 1: [], 2: [], ... }
   const tableReadyData = data?.reduce((acc, next) => {
     if (!acc[next.day]) acc[next.day] = [];
     acc[next.day] = acc[next.day].concat(next);
     return acc;
   }, {});
+
+  const filteredData = (tableReadyData?.[day] || []).filter((d) => {
+    const { east, west, technique, technique_category } = d;
+    const regex = new RegExp(`^${searchText}`, "i");
+
+    switch (searchBy.toLowerCase()) {
+      case "name":
+        return regex.test(east) || regex.test(west);
+      case "technique":
+        return regex.test(technique);
+      case "technique_category":
+        return regex.test(technique_category);
+      default:
+        return true;
+    }
+  });
 
   const headers = [
     {
@@ -99,19 +126,52 @@ const TournamentBoutDetail = () => {
     /* { colKey: "loser", display: "Loser", sortType: "string" }, */
   ];
 
+  const onSearchByChange = (nextSearchBy) => {
+    searchParams.set("searchBy", nextSearchBy);
+    searchParams.delete("searchText");
+    setSearchParams(searchParams);
+  };
+
+  const onSearchTextChange = (e) => {
+    if (e.target.value.trim() === "") {
+      searchParams.delete("searchText");
+    } else {
+      searchParams.set("searchText", e.target.value);
+    }
+    setSearchParams(searchParams);
+  };
+
   return (
     <Loader loading={status === LOADING} error={false} errorMsg={errorMsg}>
       <div className={styles.wrapper}>
+        <div className={styles.filters}>
+          <Dropdown
+            label="Search by"
+            options={[
+              { value: "name", label: "Name" },
+              { value: "technique", label: "Technique" },
+              { value: "technique_category", label: "Technique Category" },
+            ]}
+            selected={searchBy}
+            onChange={onSearchByChange}
+          />
+          <input value={searchText} onChange={onSearchTextChange} />
+        </div>
         <h2 className={styles.h2}>{`${monthMap[month]} ${year}`}</h2>
         <div className={styles.dayNav}>
           {Object.keys(tableReadyData || {}).map((d) => {
+            const destination = `/tournaments/${year}/${month}/${d}${
+              searchText.length
+                ? `?searchBy=${searchBy}&searchText=${searchText}`
+                : ""
+            }`;
             return (
               <Link
                 key={d}
                 className={`${styles.dayNavItem} ${
                   day === d ? styles.selected : ""
                 }`}
-                to={`/tournaments/${year}/${month}/${d}`}
+                to={destination}
               >
                 {`Day ${d}`}
               </Link>
@@ -119,11 +179,7 @@ const TournamentBoutDetail = () => {
           })}
         </div>
         <div className={styles.tableWrapper}>
-          <DisplayTable
-            headers={headers}
-            data={tableReadyData?.[day] || []}
-            canSort
-          />
+          <DisplayTable headers={headers} data={filteredData} canSort />
         </div>
       </div>
     </Loader>

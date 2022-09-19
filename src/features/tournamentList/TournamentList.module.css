@@ -26,15 +26,7 @@
 
 .filters label input {
   width: 300px;
-  background-color: var(--color-input-background);
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 4px;
   border: 1px solid var(--gray-black);
-}
-
-.filters label input:hover {
-  background-color: var(--color-input-hover);
 }
 
 .not_found {

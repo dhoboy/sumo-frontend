@@ -4,7 +4,7 @@ import styles from "./styles/Dropdown.module.css";
 
 const prop_info = {
   label: PropTypes.string.isRequired,
-  options: PropTypes.array.isRequired, // arr of strings
+  options: PropTypes.array.isRequired, // arr of strings or objects with label, value keys
   selected: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
@@ -28,9 +28,13 @@ const Dropdown = ({
         onChange={handleChange}
       >
         {options.map((option) => {
+          const isObj = typeof option === "object";
+          const value = isObj ? option.value : option;
+          const label = isObj ? option.label : option;
+
           return (
-            <option key={option} value={option}>
-              {option}
+            <option key={value} value={value}>
+              {label}
             </option>
           );
         })}

@@ -19,7 +19,7 @@ const Header = () => {
           return (
             <Link
               key={path}
-              className={pathname === path ? styles.active : null}
+              className={pathname.includes(path) ? styles.active : null}
               to={path}
             >
               {display}
