@@ -64,9 +64,9 @@ export const selectRikishiRankOverTime = (state, { rikishi }) =>
   state.rikishiRankOverTime.data?.[rikishi];
 
 export const selectRikishiRankOverTimeStatus = (state) =>
-  state.rikishiInfo.status;
+  state.rikishiRankOverTime.status;
 
 export const selectRikishiRankOverTimeErrorMsg = (state) =>
-  state.rikishiInfo.errorMsg;
+  state.rikishiRankOverTime.errorMsg;
 
 export default rikishiRankOverTimeSlice.reducer;

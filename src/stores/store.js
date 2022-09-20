@@ -6,6 +6,7 @@ import rikishiBaseInfoReducer from "./rikishiBaseInfoSlice";
 import rikishiRankOverTimeReducer from "./rikishiRankOverTimeSlice";
 import rikishiTechniqueBreakdownReducer from "./rikishiTechniqueBreakdownSlice";
 import rikishiTournamentSummaryReducer from "./rikishiTournamentSummarySlice";
+import matchupsReducer from "./matchupsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     rikishiRankOverTime: rikishiRankOverTimeReducer,
     rikishiTechniqueBreakdown: rikishiTechniqueBreakdownReducer,
     rikishiTournamentSummary: rikishiTournamentSummaryReducer,
+    matchups: matchupsReducer,
   },
 });

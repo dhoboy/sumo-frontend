@@ -1,6 +1,7 @@
 .selectedRikishi {
   margin: auto 0;
   text-align: center;
+  cursor: pointer;
 }
 
 .selectedRikishi img {
@@ -9,4 +10,9 @@
   border-radius: 90px;
   border: 2px solid;
   margin-right: 10px;
+}
+
+.selectedRikishi:hover > img,
+.selectedRikishi:hover > h3 {
+  filter: brightness(50%);
 }

@@ -3,16 +3,18 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  position: relative;
 }
 
 .rikishiSelection input {
-  width: 150px;
-  margin: 5px;
+  width: 180px;
+  margin: 5px auto;
 }
 
 .nameList {
   height: 200px;
   overflow: scroll;
+  padding-left: 50px;
 }
 
 .nameList .rikishiOption {
@@ -24,6 +26,9 @@
 
 .nameList .rikishiOption p {
   margin: auto 0;
+  background-color: var(--color-background);
+  padding-right: 10px;
+  border-radius: 4px;
 }
 
 .rikishiSelection img {
