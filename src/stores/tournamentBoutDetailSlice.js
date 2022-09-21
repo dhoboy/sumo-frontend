@@ -37,6 +37,7 @@ export const tournamentBoutDetailSlice = createSlice({
         const { year, month } = action.meta.arg;
         const key = `${year}-${month}`;
         state.status[key] = LOADING;
+        state.errorMsg[key] = "";
       })
       .addCase(fetchTournamentBoutDetail.fulfilled, (state, action) => {
         const { key, data } = action.payload;

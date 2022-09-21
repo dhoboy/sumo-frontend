@@ -33,6 +33,7 @@ export const tournamentDatesSlice = createSlice({
     builder
       .addCase(fetchTournamentDates.pending, (state) => {
         state.status = LOADING;
+        state.errorMsg = "";
       })
       .addCase(fetchTournamentDates.fulfilled, (state, action) => {
         state.status = SUCCESS;

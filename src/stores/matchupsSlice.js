@@ -5,24 +5,23 @@ import axios from "axios";
 /*
  * Slice contains info about matchups between rikishi and opponent
  *   TAKAKEISHO-SHODAI: [{
- *   "technique_en": "Frontal push down","
- *   day":10,
- *   "west_rank_value":3,"
- *   west":"TAKAKEISHO","
- *   winner":"TAKAKEISHO",
- *   east_rank":"Maegashira #4",
- *   "loser":"SHODAI",
- *   "month":9,
- *   "is_playoff":null,
- *   "east_rank_value":8,
- *   "east":"SHODAI",
- *   "year":2019,
- *   "technique":"Oshitaoshi",
- *   "id":1448,
- *   "west_rank":"Sekiwake",
- *   "technique_category":"push"
- *   }, ...
- *   ], ...
+ *     "technique_en": "Frontal push down","
+ *     day":10,
+ *     "west_rank_value":3,"
+ *     west":"TAKAKEISHO","
+ *     winner":"TAKAKEISHO",
+ *     east_rank":"Maegashira #4",
+ *     "loser":"SHODAI",
+ *     "month":9,
+ *     "is_playoff":null,
+ *     "east_rank_value":8,
+ *     "east":"SHODAI",
+ *     "year":2019,
+ *     "technique":"Oshitaoshi",
+ *     "id":1448,
+ *     "west_rank":"Sekiwake",
+ *     "technique_category":"push"
+ *   }, ... ], ...
  */
 const initialState = {
   status: IDLE,
@@ -61,6 +60,7 @@ export const matchupsSlice = createSlice({
     builder
       .addCase(fetchMatchupList.pending, (state) => {
         state.status = LOADING;
+        state.errorMsg = "";
       })
       .addCase(fetchMatchupList.fulfilled, (state, action) => {
         const key = `${action.payload.rikishi}-${action.payload.opponent}`;
@@ -78,7 +78,15 @@ export const matchupsSlice = createSlice({
 export const selectMatchup = (state, { rikishi, opponent }) => {
   const matchupKey1 = `${rikishi.toUpperCase()}-${opponent.toUpperCase()}`;
   const matchupKey2 = `${opponent.toUpperCase()}-${rikishi.toUpperCase()}`;
-  return state.matchups[matchupKey1] || state.matchups[matchupKey2] || [];
+  return (
+    state.matchups.data[matchupKey1] || state.matchups.data[matchupKey2] || []
+  );
 };
+
+export const selectAllMatchups = (state) => state.matchups.data;
+
+export const selectMatchupsStatus = (state) => state.matchups.status;
+
+export const selectMatchupsErrorMsg = (state) => state.matchups.errorMsg;
 
 export default matchupsSlice.reducer;

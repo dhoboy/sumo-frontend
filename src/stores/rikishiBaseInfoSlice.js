@@ -56,6 +56,7 @@ export const rikishiBaseInfoSlice = createSlice({
     builder
       .addCase(fetchRikishiList.pending, (state) => {
         state.status = LOADING;
+        state.errorMsg = "";
       })
       .addCase(fetchRikishiList.fulfilled, (state, action) => {
         state.status = SUCCESS;

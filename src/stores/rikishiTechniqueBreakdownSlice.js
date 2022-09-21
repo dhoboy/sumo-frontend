@@ -45,6 +45,7 @@ export const rikishiTechniqueBreakdownSlice = createSlice({
     builder
       .addCase(fetchRikishiTechniqueBreakdown.pending, (state) => {
         state.status = LOADING;
+        state.errorMsg = "";
       })
       .addCase(fetchRikishiTechniqueBreakdown.fulfilled, (state, action) => {
         state.status = SUCCESS;

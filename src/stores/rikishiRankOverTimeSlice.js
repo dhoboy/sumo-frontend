@@ -47,6 +47,7 @@ export const rikishiRankOverTimeSlice = createSlice({
     builder
       .addCase(fetchRikishiRankOverTime.pending, (state) => {
         state.status = LOADING;
+        state.errorMsg = "";
       })
       .addCase(fetchRikishiRankOverTime.fulfilled, (state, action) => {
         state.status = SUCCESS;

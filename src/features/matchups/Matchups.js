@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { selectAllRikishiBaseInfo } from "../../stores/rikishiBaseInfoSlice";
-import { fetchMatchupList } from "../../stores/matchupsSlice";
+import { LOADING, FAILED } from "../../constants.js";
+import {
+  fetchMatchupList,
+  selectAllMatchups,
+  selectMatchupsStatus,
+  selectMatchupsErrorMsg,
+} from "../../stores/matchupsSlice";
 import RikishiSelection from "./components/RikishiSelection";
 import SelectedRikishi from "./components/SelectedRikishi";
+import MatchupsResults from "./components/MatchupsResults";
+import Loader from "../../components/Loader";
 import styles from "./Matchups.module.css";
 
 const Matchups = () => {
   const dispatch = useDispatch();
   const allRikishi = useSelector(selectAllRikishiBaseInfo, shallowEqual);
+  const allMatchups = useSelector(selectAllMatchups);
+  const status = useSelector(selectMatchupsStatus);
+  const errorMsg = useSelector(selectMatchupsErrorMsg);
 
   const [rikishiFilterText, setRikishiFilterText] = useState("");
   const [opponentFilterText, setOpponentFilterText] = useState("");
@@ -53,13 +64,22 @@ const Matchups = () => {
 
   const activeGoButton = selectedRikishi.length && selectedOpponent.length;
 
-  const runSearch = () => {
-    dispatch(
-      fetchMatchupList({
-        rikishi: selectedRikishi,
-        opponent: selectedOpponent,
-      })
-    );
+  const matchupData = (() => {
+    const matchupKey1 = `${selectedRikishi.toUpperCase()}-${selectedOpponent.toUpperCase()}`;
+    const matchupKey2 = `${selectedOpponent.toUpperCase()}-${selectedRikishi.toUpperCase()}`;
+    return allMatchups[matchupKey1] || allMatchups[matchupKey2];
+  })();
+
+  // run the search if the matchup data isn't already in the store
+  const handleGoClick = () => {
+    if (!matchupData) {
+      dispatch(
+        fetchMatchupList({
+          rikishi: selectedRikishi,
+          opponent: selectedOpponent,
+        })
+      );
+    }
   };
 
   return (
@@ -89,7 +109,7 @@ const Matchups = () => {
             className={`${styles.go}${
               activeGoButton ? ` ${styles.active}` : ""
             }`}
-            onClick={runSearch}
+            onClick={handleGoClick}
           >
             GO
           </button>
@@ -113,6 +133,17 @@ const Matchups = () => {
           />
         )}
       </div>
+      <Loader
+        loading={status === LOADING}
+        error={status === FAILED}
+        errorMsg={errorMsg}
+      >
+        <MatchupsResults
+          rikishi={selectedRikishi}
+          opponent={selectedOpponent}
+          matchupData={matchupData}
+        />
+      </Loader>
     </div>
   );
 };
