@@ -1,8 +1,62 @@
 .totals {
   display: flex;
   justify-content: space-around;
+  text-align: center;
 }
 
 .matchupsTable {
   margin: auto;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.matchupsTable th {
+  text-transform: uppercase;
+}
+
+.matchupsTable td {
+  padding: 8px 12px;
+}
+
+.matchupsTable th.rikishiName div {
+  width: 300px;
+}
+
+.force,
+.push,
+.dodge,
+.throw,
+.default,
+.uncategorized {
+  border-radius: 4px;
+  text-align: center;
+  color: var(--white);
+  padding: 0px 8px;
+  width: 200px;
+  margin: auto;
+}
+
+.force {
+  background-color: var(--force);
+}
+
+.push {
+  background-color: var(--push);
+}
+
+.dodge {
+  background-color: var(--dodge);
+}
+
+.throw {
+  background-color: var(--throw);
+}
+
+.default {
+  background-color: var(--default);
+}
+
+.uncategorized {
+  background-color: var(--uncategorized);
+  color: var(--black);
 }

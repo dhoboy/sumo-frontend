@@ -11,11 +11,13 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
 
   const data = (matchupData || []).reduce(
     (acc, next) => {
-      const { winner, year, month, day } = next;
+      const { winner, year, month, day, technique, technique_category } = next;
       acc.matchups = acc.matchups.concat({
         rikishi,
         opponent,
         winner,
+        technique,
+        technique_category,
         year,
         month,
         day,
@@ -38,13 +40,32 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
   return (
     <div className={styles.container}>
       <div className={styles.totals}>
-        <h2>{data?.totals?.[rikishi]}</h2>
-        <h2>{data?.totals?.[opponent]}</h2>
+        <div>
+          <h2>{rikishi}</h2>
+          <h2>{data?.totals?.[rikishi]}</h2>
+        </div>
+        <div>
+          <h2>{opponent}</h2>
+          <h2>{data?.totals?.[opponent]}</h2>
+        </div>
       </div>
       <table className={styles.matchupsTable}>
         <thead>
           <tr>
             {headers.map((header) => {
+              if (header === "rikishi") {
+                return (
+                  <th key={header} className={styles.rikishiName}>
+                    <div></div>
+                  </th>
+                );
+              } else if (header === "opponent") {
+                return (
+                  <th key={header} className={styles.rikishiName}>
+                    <div></div>
+                  </th>
+                );
+              }
               return <th key={header}>{header}</th>;
             })}
           </tr>
@@ -55,13 +76,33 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
               <tr key={Math.random().toString(36)}>
                 {headers.map((key) => {
                   if (key === "rikishi" && row.winner === rikishi) {
-                    return <td>O</td>;
+                    return (
+                      <td>
+                        <div
+                          className={
+                            styles[row.technique_category || "uncategorized"]
+                          }
+                        >
+                          {row.technique}
+                        </div>
+                      </td>
+                    );
                   } else if (key === "rikishi") {
                     return <td></td>;
                   }
 
                   if (key === "opponent" && row.winner === opponent) {
-                    return <td>O</td>;
+                    return (
+                      <td>
+                        <div
+                          className={
+                            styles[row.technique_category || "uncategorized"]
+                          }
+                        >
+                          {row.technique}
+                        </div>
+                      </td>
+                    );
                   } else if (key === "opponent") {
                     return <td></td>;
                   }
