@@ -3,6 +3,12 @@
   height: 100%;
 }
 
+.instructions {
+  text-align: center;
+  font-size: 18px;
+  padding-bottom: 15px;
+}
+
 .ring {
   position: relative;
   display: flex;

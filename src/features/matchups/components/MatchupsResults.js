@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styles from "./MatchupsResults.module.css";
 
-// TODO: Continue styling these results
 const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
-  // data hasn't been fetched yet for rikishi and opponent
-  if (!matchupData) return null;
+  const el = useRef(null);
+
+  useEffect(() => {
+    if (matchupData) {
+      el.current.scrollIntoView();
+    }
+  }, [matchupData]);
 
   // const headers = Object.keys(data.matchups?.[0] || {});
   const headers = ["rikishi", "year", "month", "day", "opponent"];
@@ -28,6 +32,9 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
     { totals: { [rikishi]: 0, [opponent]: 0 }, matchups: [] }
   );
 
+  // data hasn't been fetched yet for rikishi and opponent
+  if (!matchupData) return null;
+
   // rikishi and opponent have never faced each other
   if (!data.matchups.length) {
     return (
@@ -38,17 +45,7 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.totals}>
-        <div>
-          <h2>{rikishi}</h2>
-          <h2>{data?.totals?.[rikishi]}</h2>
-        </div>
-        <div>
-          <h2>{opponent}</h2>
-          <h2>{data?.totals?.[opponent]}</h2>
-        </div>
-      </div>
+    <div ref={el} className={styles.container}>
       <table className={styles.matchupsTable}>
         <thead>
           <tr>
@@ -56,13 +53,15 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
               if (header === "rikishi") {
                 return (
                   <th key={header} className={styles.rikishiName}>
-                    <div></div>
+                    <h2>{rikishi}</h2>
+                    <h2>{data?.totals?.[rikishi]}</h2>
                   </th>
                 );
               } else if (header === "opponent") {
                 return (
                   <th key={header} className={styles.rikishiName}>
-                    <div></div>
+                    <h2>{opponent}</h2>
+                    <h2>{data?.totals?.[opponent]}</h2>
                   </th>
                 );
               }
@@ -71,47 +70,60 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
           </tr>
         </thead>
         <tbody>
-          {data?.matchups?.map((row) => {
-            return (
-              <tr key={Math.random().toString(36)}>
-                {headers.map((key) => {
-                  if (key === "rikishi" && row.winner === rikishi) {
-                    return (
-                      <td>
-                        <div
-                          className={
-                            styles[row.technique_category || "uncategorized"]
-                          }
+          {data?.matchups
+            ?.sort((a, b) => {
+              return (
+                new Date(b.year, b.month, b.day) -
+                new Date(a.year, a.month, a.day)
+              );
+            })
+            .map((row) => {
+              return (
+                <tr key={Math.random().toString(36)}>
+                  {headers.map((key) => {
+                    if (key === "rikishi" && row.winner === rikishi) {
+                      return (
+                        <td
+                          key={Math.random().toString(36)}
+                          className={styles.technique_category_row}
                         >
-                          {row.technique}
-                        </div>
-                      </td>
-                    );
-                  } else if (key === "rikishi") {
-                    return <td></td>;
-                  }
+                          <div
+                            className={
+                              styles[row.technique_category || "uncategorized"]
+                            }
+                          >
+                            {row.technique}
+                          </div>
+                        </td>
+                      );
+                    } else if (key === "rikishi") {
+                      return <td key={Math.random().toString(36)}></td>;
+                    }
 
-                  if (key === "opponent" && row.winner === opponent) {
-                    return (
-                      <td>
-                        <div
-                          className={
-                            styles[row.technique_category || "uncategorized"]
-                          }
+                    if (key === "opponent" && row.winner === opponent) {
+                      return (
+                        <td
+                          key={Math.random().toString(36)}
+                          className={styles.technique_category_row}
                         >
-                          {row.technique}
-                        </div>
-                      </td>
-                    );
-                  } else if (key === "opponent") {
-                    return <td></td>;
-                  }
+                          <div
+                            className={
+                              styles[row.technique_category || "uncategorized"]
+                            }
+                          >
+                            {row.technique}
+                          </div>
+                        </td>
+                      );
+                    } else if (key === "opponent") {
+                      return <td key={Math.random().toString(36)}></td>;
+                    }
 
-                  return <td>{row[key]}</td>;
-                })}
-              </tr>
-            );
-          })}
+                    return <td key={Math.random().toString(36)}>{row[key]}</td>;
+                  })}
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

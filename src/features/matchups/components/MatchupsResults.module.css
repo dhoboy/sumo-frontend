@@ -1,12 +1,10 @@
-.totals {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .matchupsTable {
   margin: auto;
-  padding-bottom: 20px;
   text-align: center;
 }
 
@@ -18,8 +16,8 @@
   padding: 8px 12px;
 }
 
-.matchupsTable th.rikishiName div {
-  width: 300px;
+.technique_category_row {
+  width: 40%;
 }
 
 .force,
@@ -32,7 +30,7 @@
   text-align: center;
   color: var(--white);
   padding: 0px 8px;
-  width: 200px;
+  width: 50%;
   margin: auto;
 }
 

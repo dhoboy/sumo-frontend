@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { selectAllRikishiBaseInfo } from "../../stores/rikishiBaseInfoSlice";
 import { LOADING, FAILED } from "../../constants.js";
@@ -14,6 +14,8 @@ import MatchupsResults from "./components/MatchupsResults";
 import Loader from "../../components/Loader";
 import styles from "./Matchups.module.css";
 
+// TODO: technique color backgrounds sometimes aren't long enough for the technique name
+// TODO: The loader needs updating for this page
 const Matchups = () => {
   const dispatch = useDispatch();
   const allRikishi = useSelector(selectAllRikishiBaseInfo, shallowEqual);
@@ -25,6 +27,7 @@ const Matchups = () => {
   const [opponentFilterText, setOpponentFilterText] = useState("");
   const [selectedRikishi, setSelectedRikishi] = useState("");
   const [selectedOpponent, setSelectedOpponent] = useState("");
+  const [activeGoButton, setActiveGoButton] = useState(false);
 
   const rikishiOptions = Object.keys(allRikishi).filter((rikishiName) => {
     const regex = new RegExp(`^${rikishiFilterText}`, "i");
@@ -52,6 +55,12 @@ const Matchups = () => {
     setSelectedOpponent(rikishiName);
   };
 
+  useEffect(() => {
+    if (selectedRikishi.length && selectedOpponent.length) {
+      setActiveGoButton(true);
+    }
+  }, [selectedOpponent.length, selectedRikishi.length]);
+
   const changeRikishi = ({ rikishiOrOpponent }) => {
     if (rikishiOrOpponent === "rikishi") {
       setSelectedRikishi("");
@@ -61,8 +70,6 @@ const Matchups = () => {
       setOpponentFilterText("");
     }
   };
-
-  const activeGoButton = selectedRikishi.length && selectedOpponent.length;
 
   const matchupData = (() => {
     const matchupKey1 = `${selectedRikishi.toUpperCase()}-${selectedOpponent.toUpperCase()}`;
@@ -80,10 +87,15 @@ const Matchups = () => {
         })
       );
     }
+    setActiveGoButton(false);
   };
 
   return (
     <div className={styles.wrapper}>
+      <p className={styles.instructions}>
+        Select Rikishi and an Opponent and push Go to see their matchup history
+        below
+      </p>
       <div className={styles.ring}>
         {selectedRikishi.length ? (
           <SelectedRikishi
