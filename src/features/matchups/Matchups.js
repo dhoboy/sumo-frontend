@@ -27,7 +27,6 @@ const Matchups = () => {
   const [opponentFilterText, setOpponentFilterText] = useState("");
   const [selectedRikishi, setSelectedRikishi] = useState("");
   const [selectedOpponent, setSelectedOpponent] = useState("");
-  const [activeGoButton, setActiveGoButton] = useState(false);
 
   const rikishiOptions = Object.keys(allRikishi).filter((rikishiName) => {
     const regex = new RegExp(`^${rikishiFilterText}`, "i");
@@ -55,11 +54,22 @@ const Matchups = () => {
     setSelectedOpponent(rikishiName);
   };
 
+  const matchupData = (() => {
+    const matchupKey1 = `${selectedRikishi.toUpperCase()}-${selectedOpponent.toUpperCase()}`;
+    const matchupKey2 = `${selectedOpponent.toUpperCase()}-${selectedRikishi.toUpperCase()}`;
+    return allMatchups[matchupKey1] || allMatchups[matchupKey2];
+  })();
+
   useEffect(() => {
-    if (selectedRikishi.length && selectedOpponent.length) {
-      setActiveGoButton(true);
+    if (selectedRikishi.length && selectedOpponent.length && !matchupData) {
+      dispatch(
+        fetchMatchupList({
+          rikishi: selectedRikishi,
+          opponent: selectedOpponent,
+        })
+      );
     }
-  }, [selectedOpponent.length, selectedRikishi.length]);
+  }, [dispatch, matchupData, selectedOpponent, selectedRikishi]);
 
   const changeRikishi = ({ rikishiOrOpponent }) => {
     if (rikishiOrOpponent === "rikishi") {
@@ -71,31 +81,8 @@ const Matchups = () => {
     }
   };
 
-  const matchupData = (() => {
-    const matchupKey1 = `${selectedRikishi.toUpperCase()}-${selectedOpponent.toUpperCase()}`;
-    const matchupKey2 = `${selectedOpponent.toUpperCase()}-${selectedRikishi.toUpperCase()}`;
-    return allMatchups[matchupKey1] || allMatchups[matchupKey2];
-  })();
-
-  // run the search if the matchup data isn't already in the store
-  const handleGoClick = () => {
-    if (!matchupData) {
-      dispatch(
-        fetchMatchupList({
-          rikishi: selectedRikishi,
-          opponent: selectedOpponent,
-        })
-      );
-    }
-    setActiveGoButton(false);
-  };
-
   return (
     <div className={styles.wrapper}>
-      <p className={styles.instructions}>
-        Select Rikishi and an Opponent and push Go to see their matchup history
-        below
-      </p>
       <div className={styles.ring}>
         {selectedRikishi.length ? (
           <SelectedRikishi
@@ -117,14 +104,6 @@ const Matchups = () => {
         )}
         <div className={styles.middleColumn}>
           <h2 className={styles.vs}>VS</h2>
-          <button
-            className={`${styles.go}${
-              activeGoButton ? ` ${styles.active}` : ""
-            }`}
-            onClick={handleGoClick}
-          >
-            GO
-          </button>
         </div>
         {selectedOpponent.length ? (
           <SelectedRikishi
@@ -149,6 +128,8 @@ const Matchups = () => {
         loading={status === LOADING}
         error={status === FAILED}
         errorMsg={errorMsg}
+        className={styles.matchupsResultsWrapper}
+        size="small"
       >
         <MatchupsResults
           rikishi={selectedRikishi}

@@ -16,6 +16,10 @@
   padding: 8px 12px;
 }
 
+.matchupsTable td.dateEntry {
+  padding: 0;
+}
+
 .technique_category_row {
   width: 40%;
 }
@@ -30,7 +34,6 @@
   text-align: center;
   color: var(--white);
   padding: 0px 8px;
-  width: 50%;
   margin: auto;
 }
 

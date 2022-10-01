@@ -1,17 +1,25 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { monthMap, smallMonthMap } from "../../../utils";
 import styles from "./MatchupsResults.module.css";
 
 const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
   const el = useRef(null);
+  const [winWidth, setWinWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     if (matchupData) {
-      el.current.scrollIntoView();
+      el?.current?.scrollIntoView();
     }
   }, [matchupData]);
 
+  useEffect(() => {
+    const updateWidth = () => setWinWidth(window.innerWidth);
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
   // const headers = Object.keys(data.matchups?.[0] || {});
-  const headers = ["rikishi", "year", "month", "day", "opponent"];
+  const headers = ["rikishi", "date", "opponent"];
 
   const data = (matchupData || []).reduce(
     (acc, next) => {
@@ -65,7 +73,8 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
                   </th>
                 );
               }
-              return <th key={header}>{header}</th>;
+              // date
+              return <th key={header}></th>;
             })}
           </tr>
         </thead>
@@ -119,7 +128,19 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
                       return <td key={Math.random().toString(36)}></td>;
                     }
 
-                    return <td key={Math.random().toString(36)}>{row[key]}</td>;
+                    // date
+                    return (
+                      <td
+                        className={styles.dateEntry}
+                        key={Math.random().toString(36)}
+                      >
+                        {`${
+                          winWidth <= 768
+                            ? smallMonthMap[row.month]
+                            : monthMap[row.month]
+                        } ${row.year}`}
+                      </td>
+                    );
                   })}
                 </tr>
               );

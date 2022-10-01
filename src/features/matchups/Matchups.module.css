@@ -1,44 +1,52 @@
 .wrapper {
-  padding: 25px;
+  padding: 25px 10px;
   height: 100%;
-}
-
-.instructions {
-  text-align: center;
-  font-size: 18px;
-  padding-bottom: 15px;
 }
 
 .ring {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
-  border: 2px solid;
-  border-radius: 500px;
-  height: 80%;
-  width: 65%;
   margin: auto;
 }
 
 .middleColumn {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  height: 70%;
-  margin-top: auto;
-  text-align: center;
+  padding: 15px;
 }
 
-button.go {
-  border: none;
-  border-radius: 4px;
-  font-size: 24px;
-  pointer-events: none;
-  filter: brightness(0.5);
+.middleColumn h2 {
+  display: none;
 }
 
-button.go.active {
-  cursor: pointer;
-  pointer-events: all;
-  filter: brightness(1);
+.matchupsResultsWrapper {
+  padding-top: 20px;
+}
+
+/* tablet and bigger */
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 25px;
+  }
+
+  .ring {
+    flex-direction: row;
+    border: 5px solid;
+    border-radius: 500px;
+    height: 80%;
+    width: 650px;
+  }
+
+  .middleColumn {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+    margin: auto 0;
+  }
+
+  .middleColumn h2 {
+    display: block;
+  }
 }

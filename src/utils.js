@@ -19,6 +19,27 @@ export const monthMap = {
   november: 11,
 };
 
+export const smallMonthMap = {
+  1: "Jan",
+  3: "Mar",
+  5: "May",
+  7: "Jul",
+  9: "Sep",
+  11: "Nov",
+  Jan: 1,
+  Mar: 3,
+  May: 5,
+  Jul: 7,
+  Sep: 9,
+  Nov: 11,
+  jan: 1,
+  mar: 3,
+  may: 5,
+  jul: 7,
+  sep: 9,
+  nov: 11,
+};
+
 // TODO: Update with d3 number format
 export const formatPercent = (num) => {
   return (num * 100).toFixed(2) + "%";
