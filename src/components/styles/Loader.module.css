@@ -1,16 +1,31 @@
-.img {
+.wrapper {
+  width: 5%;
+  margin: auto;
+}
+
+.img.small {
+  --size: 100px;
+}
+
+.img.medium {
+  --size: 200px;
+}
+
+.img.large {
   --size: 300px;
+}
+
+.img {
   height: var(--size);
-  position: fixed;
-  inset: calc(50% - calc(var(--size) / 2));
+  position: relative;
   animation: move 2s infinite alternate;
 }
 
 @keyframes move {
   from {
-    transform: translate3d(100px, 0, 0)
+    transform: translate3d(100px, 0, 0);
   }
   to {
-    transform: translate3d(-100px, 0, 0)
+    transform: translate3d(-100px, 0, 0);
   }
 }
