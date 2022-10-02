@@ -1,6 +1,7 @@
 .wrapper {
-  width: 5%;
+  width: 50%;
   margin: auto;
+  padding-top: 50px;
 }
 
 .img.small {
@@ -23,9 +24,25 @@
 
 @keyframes move {
   from {
-    transform: translate3d(100px, 0, 0);
+    transform: translate3d(50px, 0, 0);
   }
   to {
-    transform: translate3d(-100px, 0, 0);
+    transform: translate3d(-50px, 0, 0);
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    width: 5%;
+    margin: auto;
+  }
+
+  @keyframes move {
+    from {
+      transform: translate3d(100px, 0, 0);
+    }
+    to {
+      transform: translate3d(-100px, 0, 0);
+    }
   }
 }

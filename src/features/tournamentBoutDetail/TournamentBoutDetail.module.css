@@ -1,13 +1,15 @@
 .wrapper {
-  padding: 25px;
+  padding: 10px;
 }
 
 .filters {
   padding-bottom: 25px;
+  font-size: 16px;
 }
 
 .filters input {
-  margin-left: 10px;
+  width: 100%;
+  margin-top: 10px;
 }
 
 .h2 {
@@ -17,9 +19,10 @@
 
 .dayNav {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   padding: 15px 15px 25px 15px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .dayNavItem {
@@ -27,7 +30,6 @@
   padding: 5px 10px;
   color: var(--color-text);
   border-radius: 4px;
-  margin: 10px;
   cursor: pointer;
   user-select: none;
   text-align: center;
@@ -40,4 +42,20 @@
 
 .tableWrapper {
   overflow: scroll;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 20px;
+  }
+
+  .dayNavItem {
+    margin: 10px;
+  }
+
+  .filters input {
+    margin-left: 10px;
+    margin-top: 0;
+    width: 300px;
+  }
 }

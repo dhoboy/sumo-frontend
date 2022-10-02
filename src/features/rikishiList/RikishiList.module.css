@@ -1,25 +1,45 @@
 .wrapper {
   height: 70%;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .filters {
-  padding: 25px;
-  display: flex;
-  justify-content: flex-start;
+  padding: 20px;
+  display: block;
+  font-size: 16px;
 }
 
 .search span {
   padding-right: 10px;
 }
 
+.search input {
+  width: 100%;
+}
+
 .checkboxes {
-  margin-top: 2px;
+  margin-top: 10px;
 }
 
 .checkboxes label span {
   padding-right: 5px;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 20px;
+  }
+
+  .filters {
+    padding: 25px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .checkboxes {
+    margin-top: 2px;
+  }
 }

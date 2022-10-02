@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchTournamentDates,
   selectTournamentDates,
@@ -20,6 +20,9 @@ import TournamentBoutDetail from "./features/tournamentBoutDetail/TournamentBout
 import Matchups from "./features/matchups/Matchups";
 import "@fortawesome/fontawesome-free/js/all.js";
 
+// stores the window sizes for responsive uses throughout the code
+export const WinSizeContext = React.createContext();
+
 const App = () => {
   const dispatch = useDispatch();
   const tournamentDates = useSelector(selectTournamentDates);
@@ -31,6 +34,8 @@ const App = () => {
   const rikishiBaseInfoStatus = useSelector((state) =>
     selectRikishiBaseInfoStatus(state)
   );
+
+  const [winWidth, setWinWidth] = useState(window.innerWidth);
 
   // multiple views need these
   // if no data, and its not currently loading, call for the data
@@ -46,30 +51,38 @@ const App = () => {
     }
   }, [dispatch, allRikishiBaseInfo, rikishiBaseInfoStatus]);
 
+  useEffect(() => {
+    const updateWidth = () => setWinWidth(window.innerWidth);
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
   return (
-    <div id="app">
-      <Header />
-      <Routes>
-        {/* Rikishi */}
-        <Route path="/" element={<RikishiList />} />
-        <Route path="rikishi" element={<RikishiList />} />
-        <Route path="rikishi/:name" element={<RikishiDetail />} />
+    <WinSizeContext.Provider value={{ winWidth }}>
+      <div id="app">
+        <Header />
+        <Routes>
+          {/* Rikishi */}
+          <Route path="/" element={<RikishiList />} />
+          <Route path="rikishi" element={<RikishiList />} />
+          <Route path="rikishi/:name" element={<RikishiDetail />} />
 
-        {/* Tournaments TODO: add a redirect for tournaments/:year/:month to go to day 1 */}
-        <Route path="tournaments" element={<TournamentList />} />
-        <Route
-          path="tournaments/:year/:month"
-          element={<TournamentBoutDetail />}
-        />
-        <Route
-          path="tournaments/:year/:month/:day"
-          element={<TournamentBoutDetail />}
-        />
+          {/* Tournaments TODO: add a redirect for tournaments/:year/:month to go to day 1 */}
+          <Route path="tournaments" element={<TournamentList />} />
+          <Route
+            path="tournaments/:year/:month"
+            element={<TournamentBoutDetail />}
+          />
+          <Route
+            path="tournaments/:year/:month/:day"
+            element={<TournamentBoutDetail />}
+          />
 
-        {/* Matchups */}
-        <Route path="matchups" element={<Matchups />} />
-      </Routes>
-    </div>
+          {/* Matchups */}
+          <Route path="matchups" element={<Matchups />} />
+        </Routes>
+      </div>
+    </WinSizeContext.Provider>
   );
 };
 

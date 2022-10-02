@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { IDLE, LOADING, SUCCESS, FAILED } from "../../constants.js";
@@ -8,11 +8,12 @@ import {
   selectRikishiBaseInfoErrorMsg,
 } from "../../stores/rikishiBaseInfoSlice";
 import { selectLatestTournament } from "../../stores/tournamentDatesSlice";
-import { monthMap } from "../../utils";
+import { monthMap, smallMonthMap } from "../../utils";
 import Loader from "../../components/Loader";
 import DisplayTable from "../../components/DisplayTable";
 import Pagination from "../../components/Pagination";
 import Checkbox from "../../components/Checkbox";
+import { WinSizeContext } from "../../App";
 import styles from "./RikishiList.module.css";
 
 const makeBool = (val) => {
@@ -28,6 +29,9 @@ const RikishiList = () => {
   const data = useSelector((state) => selectAllRikishiBaseInfo(state) ?? {});
   const errorMsg = useSelector(selectRikishiBaseInfoErrorMsg);
   const latestTournament = useSelector(selectLatestTournament, shallowEqual);
+
+  const { winWidth } = useContext(WinSizeContext);
+  const smallScreen = winWidth <= 768;
 
   const searchText = searchParams.get("searchText") || "";
   const active = makeBool(searchParams.get("active"));
@@ -48,7 +52,7 @@ const RikishiList = () => {
     },
     {
       colKey: "tournament",
-      display: "Last Active Tournament",
+      display: smallScreen ? "Last Active" : "Last Active Tournament",
       sortType: "date",
       sortKey: "tournament_date",
     },
@@ -62,7 +66,11 @@ const RikishiList = () => {
 
       acc = acc.concat({
         ...data[next],
-        ...{ tournament: `${monthMap[month]} ${year}` },
+        ...{
+          tournament: `${
+            smallScreen ? smallMonthMap[month] : monthMap[month]
+          } ${year}`,
+        },
         ...{ tournament_date: new Date(year, month - 1) },
         ...{ rank: data[next]?.rank?.rank },
         ...{ rank_value: data[next]?.rank?.rank_value },
@@ -155,6 +163,7 @@ const RikishiList = () => {
       loading={status === LOADING || status === IDLE}
       error={false}
       errorMsg={errorMsg}
+      size="medium"
     >
       <div className={styles.filters}>
         <label className={styles.search}>

@@ -13,7 +13,7 @@
 
 .technique_breakdown_table thead th,
 .technique_breakdown_table tbody td {
-  padding: 8px;
+  padding: 5px;
 }
 
 .technique_breakdown_table tr:nth-child(even) {
@@ -51,4 +51,11 @@
 
 .uncategorized {
   background-color: #666;
+}
+
+@media (min-width: 768px) {
+  .technique_breakdown_table thead th,
+  .technique_breakdown_table tbody td {
+    padding: 8px;
+  }
 }

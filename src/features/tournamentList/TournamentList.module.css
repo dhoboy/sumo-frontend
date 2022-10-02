@@ -1,21 +1,18 @@
 .wrapper {
   height: 70%;
-  padding: 0 20px 20px 20px;
+  padding: 0 10px 20px 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .filters {
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
-  padding: 25px;
+  padding: 20px;
   font-size: 16px;
 }
 
 .filters label {
-  display: flex;
   align-items: center;
   padding-right: 20px;
 }
@@ -25,11 +22,34 @@
 }
 
 .filters label input {
-  width: 300px;
+  width: 100%;
   border: 1px solid var(--gray-black);
+}
+
+.dropdowns {
+  padding-top: 10px;
 }
 
 .not_found {
   font-size: 18px;
   padding-top: 25px;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 0 20px 20px 20px;
+  }
+  .filters {
+    display: flex;
+    justify-content: flex-start;
+    padding: 25px;
+  }
+
+  .filters label {
+    display: flex;
+  }
+
+  .filters label input {
+    width: 300px;
+  }
 }

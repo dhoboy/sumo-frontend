@@ -64,9 +64,6 @@ const RikishiDetail = () => {
     (state) => selectRikishiRankOverTime(state, { rikishi: name }) ?? {}
   );
 
-  // console.log("rankOverTime: ", rankOverTime);
-  // console.log("rank: ", rank);
-
   // load rikishi data needed for this page
   useEffect(() => {
     dispatch(fetchRikishiRankOverTime({ rikishi: name }));
@@ -125,7 +122,7 @@ const RikishiDetail = () => {
             <h2>All Wins by Technique</h2>
             <TechniqueBreakdownTable data={wins_by_technique} />
           </div>
-          <div className={styles.technique}>
+          <div className={`${styles.technique} ${styles.techniqueLosses}`}>
             <h2>All Losses to Technique</h2>
             <TechniqueBreakdownTable data={losses_to_technique} />
           </div>

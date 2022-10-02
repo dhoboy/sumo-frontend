@@ -1,22 +1,17 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { monthMap, smallMonthMap } from "../../../utils";
+import { WinSizeContext } from "../../../App";
 import styles from "./MatchupsResults.module.css";
 
 const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
   const el = useRef(null);
-  const [winWidth, setWinWidth] = useState(window.innerWidth);
+  const { winWidth } = useContext(WinSizeContext);
 
   useEffect(() => {
     if (matchupData) {
       el?.current?.scrollIntoView();
     }
   }, [matchupData]);
-
-  useEffect(() => {
-    const updateWidth = () => setWinWidth(window.innerWidth);
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
 
   // const headers = Object.keys(data.matchups?.[0] || {});
   const headers = ["rikishi", "date", "opponent"];

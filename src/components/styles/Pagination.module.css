@@ -3,15 +3,23 @@
   padding: 20px;
 }
 
-.page, .carrot {
-  margin: 10px;
+.page,
+.carrot {
   padding: 10px;
   cursor: pointer;
   border-radius: 4px;
   user-select: none;
 }
 
-.page.active, .carrot.active {
+.page.active,
+.carrot.active {
   background-color: var(--selected-item);
   color: var(--background-gray-dk);
+}
+
+@media (min-width: 768px) {
+  .page,
+  .carrot {
+    margin: 10px;
+  }
 }

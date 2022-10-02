@@ -102,18 +102,20 @@ const TournamentList = () => {
           <span>Search by Name</span>
           <input value={rikishiSearchText} onChange={onRikishiTextChange} />
         </label>
-        <Dropdown
-          label="Year"
-          options={yearOptions}
-          selected={selectedYear}
-          onChange={onYearChange}
-        />
-        <Dropdown
-          label="Month"
-          options={monthOptions}
-          selected={selectedMonth}
-          onChange={onMonthChange}
-        />
+        <div className={styles.dropdowns}>
+          <Dropdown
+            label="Year"
+            options={yearOptions}
+            selected={selectedYear}
+            onChange={onYearChange}
+          />
+          <Dropdown
+            label="Month"
+            options={monthOptions}
+            selected={selectedMonth}
+            onChange={onMonthChange}
+          />
+        </div>
       </div>
       <div className={styles.wrapper}>
         {filteredTournamentDates.length ? (

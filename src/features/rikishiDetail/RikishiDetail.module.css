@@ -1,20 +1,23 @@
 .container {
-  padding: 25px;
+  flex-direction: row;
+  padding: 10px;
 }
 
 .container header {
   display: flex;
   justify-content: space-around;
+  flex-direction: column;
   padding: 20px 0;
 }
 
 .info {
-  width: 20%;
+  width: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 25px;
 }
 
 .headshot {
@@ -39,6 +42,7 @@
 .breakdown_row {
   display: flex;
   justify-content: space-around;
+  flex-direction: column;
 }
 
 .breakdown_row:last-child {
@@ -50,6 +54,34 @@
 }
 
 .technique h2 {
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   text-align: center;
+}
+
+.techniqueLosses {
+  padding-top: 30px;
+}
+
+@media (min-width: 768px) {
+  .container header {
+    flex-direction: row;
+    padding: 25px;
+  }
+
+  .info {
+    width: 20%;
+    padding-bottom: 0;
+  }
+
+  .breakdown_row {
+    flex-direction: row;
+  }
+
+  .techniqueLosses {
+    padding-top: 0px;
+  }
+
+  .technique h2 {
+    padding-bottom: 30px;
+  }
 }
