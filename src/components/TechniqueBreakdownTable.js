@@ -11,12 +11,11 @@ const TechniqueBreakdownTable = ({ data = {} }) => {
           {headers.map((header) => {
             return (
               <th key={header}>
-                {header
-                  .split("_")
-                  .map((word) =>
-                    word.charAt(0).toUpperCase().concat(word.slice(1))
-                  )
-                  .join(" ")}
+                {header === "technique_en"
+                  ? "Tech. Description"
+                  : header === "technique_category"
+                  ? "Tech. Category"
+                  : header.charAt(0).toUpperCase().concat(header.slice(1))}
               </th>
             );
           })}

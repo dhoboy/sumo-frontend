@@ -19,9 +19,9 @@
 
 .dayNav {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 15px 15px 25px 15px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 15px 5px 25px 5px;
   overflow: auto;
 }
 

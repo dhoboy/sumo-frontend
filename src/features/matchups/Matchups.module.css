@@ -49,4 +49,8 @@
   .middleColumn h2 {
     display: block;
   }
+
+  .matchupsResultsWrapper {
+    margin-top: -160px;
+  }
 }

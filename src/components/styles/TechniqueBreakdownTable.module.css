@@ -1,5 +1,6 @@
 .technique_breakdown_table {
   border-collapse: collapse;
+  width: 100%;
 }
 
 .technique_breakdown_table tbody,

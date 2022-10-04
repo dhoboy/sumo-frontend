@@ -77,8 +77,17 @@
     flex-direction: row;
   }
 
+  .technique {
+    overflow: auto;
+  }
+
+  .techniqueWins {
+    padding-right: 15px;
+  }
+
   .techniqueLosses {
     padding-top: 0px;
+    padding-left: 15px;
   }
 
   .technique h2 {

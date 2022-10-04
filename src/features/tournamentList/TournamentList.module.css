@@ -52,4 +52,9 @@
   .filters label input {
     width: 300px;
   }
+
+  .dropdowns {
+    padding-top: 0;
+    display: flex;
+  }
 }

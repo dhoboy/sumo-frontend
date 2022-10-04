@@ -1,10 +1,13 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef, useContext } from "react";
 import * as d3 from "d3";
-import { rankValueToName } from "../utils";
+import { rankValueToName, rankValueToNameSmall } from "../utils";
+import { WinSizeContext } from "../App";
 import styles from "./styles/RankOverTimeLineGraph.module.css";
 
 const RankOverTimeLineGraph = ({ data }) => {
   const graph = useRef(null);
+  const { winWidth } = useContext(WinSizeContext);
+  const smallScreen = winWidth <= 768;
 
   // My modified fork of Mike Bostock's LineChart
   // Copyright 2021 Observable, Inc.
@@ -121,7 +124,7 @@ const RankOverTimeLineGraph = ({ data }) => {
 
     const xAxisTicks = xAxisG.selectAll(".tick");
 
-    xAxisTicks.attr("font-size", "13px");
+    xAxisTicks.attr("font-size", smallScreen ? "17px" : "13px");
 
     const emptyTicks = xAxisTicks.filter((d) => {
       const month = +d.getMonth() + 1;
@@ -134,7 +137,9 @@ const RankOverTimeLineGraph = ({ data }) => {
       .axisLeft(yScale)
       .ticks(width / 80)
       .tickSizeOuter(0)
-      .tickFormat((d) => rankValueToName[d]);
+      .tickFormat((d) =>
+        smallScreen ? rankValueToNameSmall[d] : rankValueToName[d]
+      );
 
     // y axis
     const yAxisG = svg
@@ -160,7 +165,7 @@ const RankOverTimeLineGraph = ({ data }) => {
       );
 
     const yAxisTicks = yAxisG.selectAll(".tick");
-    yAxisTicks.attr("font-size", "12px");
+    yAxisTicks.attr("font-size", smallScreen ? "16px " : "12px");
 
     yAxisTicks.selectAll("text").attr("fill", (d) => {
       if (d <= lowestSanyaku) return sanyakuGoldText;
@@ -218,30 +223,50 @@ const RankOverTimeLineGraph = ({ data }) => {
       .attr("cy", (d) => yScale(d.rank_value))
       .attr("fill-opacity", 0)
       .attr("r", 10)
-      .on("mouseover", (event, d) => {
-        const date = new Date(+d.tournament.year, +d.tournament.month - 1);
+      .on(
+        "mouseover",
+        smallScreen
+          ? null
+          : (event, d) => {
+              const date = new Date(
+                +d.tournament.year,
+                +d.tournament.month - 1
+              );
 
-        tooltip.html("");
-        tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
+              tooltip.html("");
+              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
 
-        tooltip.append("p").text(`${d.rank}`);
+              tooltip.append("p").text(`${d.rank}`);
 
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", (event, d) => {
-        let { pageX, pageY } = event;
-        let left = pageX + 10;
-        let top = pageY - 50;
+              return tooltip.style("visibility", "visible");
+            }
+      )
+      .on(
+        "mousemove",
+        smallScreen
+          ? null
+          : (event, d) => {
+              let { pageX, pageY } = event;
+              let left = pageX + 10;
+              let top = pageY - 50;
 
-        if (pageX >= 715) {
-          left = pageX - 200;
-        }
+              if (pageX >= 715) {
+                left = pageX - 200;
+              }
 
-        return tooltip.style("top", `${top}px`).style("left", `${left}px`);
-      })
-      .on("mouseout", () => {
-        return tooltip.style("visibility", "hidden");
-      });
+              return tooltip
+                .style("top", `${top}px`)
+                .style("left", `${left}px`);
+            }
+      )
+      .on(
+        "mouseout",
+        smallScreen
+          ? null
+          : () => {
+              return tooltip.style("visibility", "hidden");
+            }
+      );
 
     stars
       .append("path")
@@ -252,30 +277,50 @@ const RankOverTimeLineGraph = ({ data }) => {
           new Date(+d.tournament.year, +d.tournament.month - 1)
         )},${yScale(d.rank_value)})`;
       })
-      .on("mouseover", (event, d) => {
-        const date = new Date(+d.tournament.year, +d.tournament.month - 1);
+      .on(
+        "mouseover",
+        smallScreen
+          ? null
+          : (event, d) => {
+              const date = new Date(
+                +d.tournament.year,
+                +d.tournament.month - 1
+              );
 
-        tooltip.html("");
-        tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
+              tooltip.html("");
+              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
 
-        tooltip.append("p").text(`${d.rank}`);
+              tooltip.append("p").text(`${d.rank}`);
 
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", (event, d) => {
-        let { pageX, pageY } = event;
-        let left = pageX + 10;
-        let top = pageY - 50;
+              return tooltip.style("visibility", "visible");
+            }
+      )
+      .on(
+        "mousemove",
+        smallScreen
+          ? null
+          : (event, d) => {
+              let { pageX, pageY } = event;
+              let left = pageX + 10;
+              let top = pageY - 50;
 
-        if (pageX >= 715) {
-          left = pageX - 200;
-        }
+              if (pageX >= 715) {
+                left = pageX - 200;
+              }
 
-        return tooltip.style("top", `${top}px`).style("left", `${left}px`);
-      })
-      .on("mouseout", () => {
-        return tooltip.style("visibility", "hidden");
-      });
+              return tooltip
+                .style("top", `${top}px`)
+                .style("left", `${left}px`);
+            }
+      )
+      .on(
+        "mouseout",
+        smallScreen
+          ? null
+          : () => {
+              return tooltip.style("visibility", "hidden");
+            }
+      );
 
     // All other ranks drawn with points
     const points = svg
@@ -295,30 +340,50 @@ const RankOverTimeLineGraph = ({ data }) => {
       .attr("cy", (d) => yScale(d.rank_value))
       .attr("fill-opacity", 0)
       .attr("r", 10)
-      .on("mouseover", (event, d) => {
-        const date = new Date(+d.tournament.year, +d.tournament.month - 1);
+      .on(
+        "mouseover",
+        smallScreen
+          ? null
+          : (event, d) => {
+              const date = new Date(
+                +d.tournament.year,
+                +d.tournament.month - 1
+              );
 
-        tooltip.html("");
-        tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
+              tooltip.html("");
+              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
 
-        tooltip.append("p").text(`${d.rank}`);
+              tooltip.append("p").text(`${d.rank}`);
 
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", (event, d) => {
-        let { pageX, pageY } = event;
-        let left = pageX + 10;
-        let top = pageY - 50;
+              return tooltip.style("visibility", "visible");
+            }
+      )
+      .on(
+        "mousemove",
+        smallScreen
+          ? null
+          : (event, d) => {
+              let { pageX, pageY } = event;
+              let left = pageX + 10;
+              let top = pageY - 50;
 
-        if (pageX >= 715) {
-          left = pageX - 200;
-        }
+              if (pageX >= 715) {
+                left = pageX - 200;
+              }
 
-        return tooltip.style("top", `${top}px`).style("left", `${left}px`);
-      })
-      .on("mouseout", () => {
-        return tooltip.style("visibility", "hidden");
-      });
+              return tooltip
+                .style("top", `${top}px`)
+                .style("left", `${left}px`);
+            }
+      )
+      .on(
+        "mouseout",
+        smallScreen
+          ? null
+          : () => {
+              return tooltip.style("visibility", "hidden");
+            }
+      );
 
     // the points you see
     points
@@ -339,30 +404,50 @@ const RankOverTimeLineGraph = ({ data }) => {
         return 3;
         //return d.rank_value === highestRankAchieved ? 5 : 3;
       })
-      .on("mouseover", (event, d) => {
-        const date = new Date(+d.tournament.year, +d.tournament.month - 1);
+      .on(
+        "mouseover",
+        smallScreen
+          ? null
+          : (event, d) => {
+              const date = new Date(
+                +d.tournament.year,
+                +d.tournament.month - 1
+              );
 
-        tooltip.html("");
-        tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
+              tooltip.html("");
+              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
 
-        tooltip.append("p").text(`${d.rank}`);
+              tooltip.append("p").text(`${d.rank}`);
 
-        return tooltip.style("visibility", "visible");
-      })
-      .on("mousemove", (event, d) => {
-        let { pageX, pageY } = event;
-        let left = pageX + 10;
-        let top = pageY - 50;
+              return tooltip.style("visibility", "visible");
+            }
+      )
+      .on(
+        "mousemove",
+        smallScreen
+          ? null
+          : (event, d) => {
+              let { pageX, pageY } = event;
+              let left = pageX + 10;
+              let top = pageY - 50;
 
-        if (pageX >= 715) {
-          left = pageX - 200;
-        }
+              if (pageX >= 715) {
+                left = pageX - 200;
+              }
 
-        return tooltip.style("top", `${top}px`).style("left", `${left}px`);
-      })
-      .on("mouseout", () => {
-        return tooltip.style("visibility", "hidden");
-      });
+              return tooltip
+                .style("top", `${top}px`)
+                .style("left", `${left}px`);
+            }
+      )
+      .on(
+        "mouseout",
+        smallScreen
+          ? null
+          : () => {
+              return tooltip.style("visibility", "hidden");
+            }
+      );
   };
 
   const drawGraph = useCallback(() => {
@@ -376,6 +461,7 @@ const RankOverTimeLineGraph = ({ data }) => {
         height: 280,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   // Draw graph when data is ready, tear down graph when unmounting

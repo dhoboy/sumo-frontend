@@ -109,7 +109,7 @@ const RikishiDetail = () => {
               data={top_ten_wins_by_technique}
             />
           </div>
-          <div className={styles.technique}>
+          <div className={`${styles.technique} ${styles.techniqueWins}`}>
             <h2>Top Losses to Technique</h2>
             <TechniqueBarGraph
               yLabel="Defeat Percentage"

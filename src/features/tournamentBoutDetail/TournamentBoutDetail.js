@@ -142,7 +142,12 @@ const TournamentBoutDetail = () => {
   };
 
   return (
-    <Loader loading={status === LOADING} error={false} errorMsg={errorMsg}>
+    <Loader
+      size="large"
+      loading={status === LOADING}
+      error={false}
+      errorMsg={errorMsg}
+    >
       <div className={styles.wrapper}>
         <div className={styles.filters}>
           <Dropdown

@@ -8,10 +8,10 @@
 
 .h3 a {
   text-decoration: none;
-	color: var(--color-text);
-	border-bottom: 1px solid var(--color-background);
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-background);
   padding-bottom: 2px;
-	transition: 0.4s;
+  transition: 0.4s;
 }
 
 .h3 a:hover {
@@ -20,6 +20,7 @@
 
 .tableWrapper {
   max-height: 225px;
+  width: 100%;
   overflow: scroll;
   border: 1px solid;
   border-radius: 4px;
@@ -27,4 +28,21 @@
 
 .tableWrapper:last-child {
   margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .tournamentSummary {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .tournamentSummary h3 {
+    margin: auto 0;
+    text-align: right;
+    width: 15%;
+  }
+
+  .tableWrapper {
+    width: 60%;
+  }
 }

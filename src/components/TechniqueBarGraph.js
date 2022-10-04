@@ -1,9 +1,11 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useRef, useContext } from "react";
 import * as d3 from "d3";
+import { WinSizeContext } from "../App";
 import styles from "./styles/TechniqueBarGraph.module.css";
 
 const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
   const graph = useRef(null);
+  const { winWidth } = useContext(WinSizeContext);
 
   // My modified fork of Mike Bostock's BarChart
   // Copyright 2021 Observable, Inc.
@@ -92,7 +94,9 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
       .attr("transform", `translate(${marginLeft},0)`)
       .call(yAxis)
       .call((g) => g.select(".domain").remove())
-      .call((g) => g.selectAll(".tick").style("font-size", 14)) // bigger tick size font
+      .call((g) =>
+        g.selectAll(".tick").style("font-size", winWidth < 768 ? 15 : 14)
+      ) // bigger tick size font
 
       // these are the horizontal lines that run across the graph
       .call((g) =>
@@ -109,7 +113,7 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
           .attr("x", -marginLeft)
           .attr("y", marginTop / 2)
           .attr("fill", "currentColor")
-          .attr("font-size", 16)
+          .attr("font-size", winWidth < 768 ? 18 : 16)
           .attr("text-anchor", "start")
           .text(yLabel)
       );
@@ -175,7 +179,9 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
       .append("g")
       .attr("transform", `translate(0,${height - marginBottom})`)
       .call(xAxis)
-      .call((g) => g.selectAll(".tick").style("font-size", 14)) // bigger tick size font, and rotate the ticks
+      .call((g) =>
+        g.selectAll(".tick").style("font-size", winWidth < 768 ? 18 : 14)
+      ) // bigger tick size font, and rotate the ticks
       .call((g) =>
         g
           .selectAll(".tick")

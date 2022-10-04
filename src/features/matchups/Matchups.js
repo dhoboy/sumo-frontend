@@ -14,8 +14,6 @@ import MatchupsResults from "./components/MatchupsResults";
 import Loader from "../../components/Loader";
 import styles from "./Matchups.module.css";
 
-// TODO: technique color backgrounds sometimes aren't long enough for the technique name
-// TODO: The loader needs updating for this page
 const Matchups = () => {
   const dispatch = useDispatch();
   const allRikishi = useSelector(selectAllRikishiBaseInfo, shallowEqual);
