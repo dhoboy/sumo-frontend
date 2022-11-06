@@ -12,7 +12,18 @@
   margin-right: 10px;
 }
 
-.selectedRikishi:hover > img,
-.selectedRikishi:hover > h3 {
-  filter: brightness(50%);
+/* TODO: switch 90 and 10 here when finihsed making light scheme
+ */
+@media (prefers-color-scheme: dark) {
+  .selectedRikishi:hover > img,
+  .selectedRikishi:hover > h3 {
+    filter: brightness(90%);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .selectedRikishi:hover > img,
+  .selectedRikishi:hover > h3 {
+    filter: brightness(50%);
+  }
 }

@@ -31,7 +31,7 @@
 
   .ring {
     flex-direction: row;
-    border: 5px solid;
+    border: 5px solid var(--color-matchup-ring);
     border-radius: 500px;
     height: 80%;
     width: 650px;

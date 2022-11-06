@@ -23,6 +23,10 @@ import "@fortawesome/fontawesome-free/js/all.js";
 // stores the window sizes for responsive uses throughout the code
 export const WinSizeContext = React.createContext();
 
+// TODO --
+// code clean-up
+// color themes
+// testing
 const App = () => {
   const dispatch = useDispatch();
   const tournamentDates = useSelector(selectTournamentDates);

@@ -87,13 +87,13 @@ const RankOverTimeLineGraph = ({ data }) => {
 
     // bringing back my d3@v4 tooltip
     let tooltip;
-    if (d3.select("body").select("#tooltip").node()) {
-      tooltip = d3.select("body").select("#tooltip");
+    if (d3.select("body").select("#rank-over-time-tooltip").node()) {
+      tooltip = d3.select("body").select("#rank-over-time-tooltip");
     } else {
       tooltip = d3
         .select("body")
         .append("div")
-        .attr("id", "tooltip")
+        .attr("id", "rank-over-time-tooltip")
         .attr("class", styles.tooltip)
         .style("position", "absolute")
         .style("z-index", "1000")

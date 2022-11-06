@@ -4,17 +4,22 @@
   --gray-black: #333;
   --background-white: #eee;
   --light-gray: #ccc;
-  --sun-yellow: #fed976;
-  --moon-blue: #a6bddb;
-  --moon-blue-dark: #1a447a;
+  --blue: #a6bddb;
+  --blue-dark: #1a447a;
   --background-gray-dk: #282d33;
   --background-md-gray-dk: #5b6775;
+  --text-gray: #333;
+  --text-gray-blue: #333373;
   --text-gray-dk: #adbac7;
+  --red: #cf005d;
   --red-dk: #800026;
   --header-dk: #223333;
-  --visited-link: pink;
-  --selected-item: #869cfa;
-  --active-green: hsla(160, 100%, 37%, 0.2);
+  --header-lt: #a0d9db;
+  --selected-item-dk: #869cfa;
+  --selected-item-lt: #e09b9b;
+  --ring-lt: #d6b49a;
+  --tooltip-background: #f7f7f7;
+  --tooltip-border: #bbbbbb;
 
   --force: #e41a1c;
   --push: #33a02c;
@@ -31,15 +36,44 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --color-background: var(--background-white);
+    --color-background-soft: var(--background-md-gray-dk);
+    --color-tooltip-background: var(--tooltip-background);
+    --color-tooltip-border: var(--tooltip-border);
+    --color-heading-background: var(--header-lt);
+    --color-input-background: var(--white);
+    --color-input-hover: var(--light-gray);
+    --color-input-border: var(--gray-black);
+    --color-text: var(--text-gray);
+    --color-anchor: var(--red-dk);
+    --color-active: var(--blue-dark);
+    --color-text-active: var(--text-gray-blue);
+    --color-heading-underline: var(--red);
+    --color-selected-item: var(--selected-item-lt);
+    --color-matchup-ring: var(--ring-lt);
+  }
+}
+
+/* this is the dark color theme...
+ * setting to light for now so i can build light w/o
+ * changing my browser color scheme */
+@media (prefers-color-scheme: light) {
+  :root {
     --color-background: var(--background-gray-dk);
     --color-background-soft: var(--background-md-gray-dk);
+    --color-tooltip-background: var(--tooltip-background);
+    --color-tooltip-border: var(--tooltip-border);
     --color-heading-background: var(--header-dk);
     --color-input-background: var(--background-white);
     --color-input-hover: var(--light-gray);
+    --color-input-border: var(--gray-black);
     --color-text: var(--text-gray-dk);
     --color-anchor: var(--red-dk);
-    --color-active: var(--moon-blue-dark);
-    --color-text-active: var(--moon-blue);
+    --color-active: var(--blue-dark);
+    --color-text-active: var(--blue);
+    --color-heading-underline: var(--red-dk);
+    --color-selected-item: var(--selected-item-dk);
+    --color-matchup-ring: var(--black);
   }
 }
 
@@ -70,9 +104,7 @@ body {
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -82,7 +114,7 @@ body {
 input {
   padding: 5px 10px;
   background-color: var(--color-input-background);
-  border: none;
+  border: 1px solid var(--color-input-border);
   border-radius: 4px;
   width: 300px;
   font-size: 15px;

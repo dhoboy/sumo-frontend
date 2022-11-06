@@ -3,44 +3,43 @@
 }
 
 .h1 {
-	font-family: "Secular One", sans-serif;
-	letter-spacing: 0.1em;
-	padding: 10px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border-bottom: 2px solid #ccc;
-  border-bottom-color: var(--red-dk);
-	color: var(--text-gray-dk);
+  font-family: "Secular One", sans-serif;
+  letter-spacing: 0.1em;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ccc;
+  border-bottom-color: var(--color-heading-underline);
+  color: var(--color-text);
 }
 
 .nav {
   display: flex;
-	justify-content: space-around;
-	padding: 15px 0;
-	width: 100%;
-	font-size: 19px;
-	text-align: center;
+  justify-content: space-around;
+  padding: 15px 0;
+  width: 100%;
+  font-size: 19px;
+  text-align: center;
 }
 
 .nav a {
-	font-family: "Secular One", sans-serif;
-	font-size: 22px;
-	color: var(--color-text);
-	display: inline-block;
-	border-bottom: 1px solid var(--color-background);
-	text-decoration: none;
-	transition: 0.4s;
+  font-family: "Secular One", sans-serif;
+  font-size: 22px;
+  color: var(--color-text);
+  display: inline-block;
+  border-bottom: 1px solid var(--color-background);
+  text-decoration: none;
+  transition: 0.4s;
 }
 
 .nav a.active {
-	color: var(--color-text-active);
-	border-bottom-color: var(--color-text);
+  color: var(--color-text-active);
+  border-bottom-color: var(--color-text);
 }
 
 @media (hover: hover) {
-	.nav a:hover {
-		border-bottom-color: var(--color-text);
-	}
+  .nav a:hover {
+    border-bottom-color: var(--color-text);
+  }
 }
-

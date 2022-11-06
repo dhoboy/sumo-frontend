@@ -51,13 +51,13 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
 
     // bringing back my d3@v4 tooltip
     let tooltip;
-    if (d3.select("body").select("#tooltip").node()) {
-      tooltip = d3.select("body").select("#tooltip");
+    if (d3.select("body").select("#technique-bar-tooltip").node()) {
+      tooltip = d3.select("body").select("#technique-bar-tooltip");
     } else {
       tooltip = d3
         .select("body")
         .append("div")
-        .attr("id", "tooltip")
+        .attr("id", "technique-bar-tooltip")
         .attr("class", styles.tooltip)
         .style("position", "absolute")
         .style("z-index", "1000")

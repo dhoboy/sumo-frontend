@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import rikishiSvg_dark from "../assets/rikishi-dark.svg";
+import rikishiSvg from "../assets/rikishi.svg";
 import styles from "./styles/Loader.module.css";
 
 // size is "small", "medium", or "large"
@@ -31,7 +31,7 @@ const Loader = ({ loading, error, errorMsg, size, children, className }) => {
     return (
       <div className={`${styles.wrapper} ${className}`}>
         <img
-          src={rikishiSvg_dark}
+          src={rikishiSvg}
           alt="loading"
           className={`${styles.img} ${styles[size]}`}
         />

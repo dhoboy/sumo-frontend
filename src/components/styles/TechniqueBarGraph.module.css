@@ -1,11 +1,11 @@
 .tooltip {
-  background-color: #f7f7f7;
+  background-color: var(--color-tooltip-background);
   padding: 3px 12px;
   font-size: 1rem;
   font-family: sans-serif;
-  border: 1px solid #bbbbbb;
+  border: 1px solid var(--color-tooltip-border);
   border-radius: 5px;
-  box-shadow: 1px 1px 4px #bbbbbb;
+  box-shadow: 1px 1px 4px var(--color-tooltip-border);
   color: #000;
 }
 

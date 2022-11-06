@@ -13,7 +13,7 @@
 
 .page.active,
 .carrot.active {
-  background-color: var(--selected-item);
+  background-color: var(--color-selected-item);
   color: var(--background-gray-dk);
 }
 

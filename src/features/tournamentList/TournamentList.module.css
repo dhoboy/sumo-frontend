@@ -23,7 +23,6 @@
 
 .filters label input {
   width: 100%;
-  border: 1px solid var(--gray-black);
 }
 
 .dropdowns {

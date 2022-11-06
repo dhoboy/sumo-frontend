@@ -5,6 +5,7 @@
   justify-content: center;
   text-align: center;
   position: relative;
+  margin: 15px;
 }
 
 .rikishiSelection input {
@@ -43,5 +44,9 @@
 @media (min-width: 768px) {
   .nameList {
     padding-left: 50px;
+  }
+
+  .nameList .rikishiOption {
+    width: 200px;
   }
 }
