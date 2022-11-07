@@ -2,7 +2,7 @@
 	 viewBox="0 0 314.313 314.313" style="enable-background:new 0 0 314.313 314.313;" xml:space="preserve">
 	 <style>
      :root { fill: #adbac7 }
-     @media (prefers-color-scheme: dark) {
+     @media (prefers-color-scheme: light) {
        :root { fill: #4d4d4d }
      }
    </style>

@@ -54,8 +54,8 @@
 
 /* Style the checkmark/indicator */
 .label .checkmark:after {
-  left: 5px;
-  top: 2px;
+  left: 4px;
+  top: 1px;
   width: 5px;
   height: 11px;
   border: solid white;

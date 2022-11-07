@@ -1,9 +1,11 @@
 :root {
-  --white: #ffffff;
+  --white: #fff;
   --black: #000;
   --gray-black: #333;
   --background-white: #eee;
   --light-gray: #ccc;
+  --medium-gray: #888;
+  --dark-gray: #222;
   --blue: #a6bddb;
   --blue-dark: #1a447a;
   --background-gray-dk: #282d33;
@@ -16,10 +18,25 @@
   --header-dk: #223333;
   --header-lt: #a0d9db;
   --selected-item-dk: #869cfa;
-  --selected-item-lt: #e09b9b;
+  --selected-item-lt: #ebabe7;
   --ring-lt: #d6b49a;
+  --ring-dk: #856f56;
   --tooltip-background: #f7f7f7;
   --tooltip-border: #bbbbbb;
+
+  --sanyaku-gold-line-dk: #ffd700;
+  --sanyaku-gold-line-lt: #d1b200;
+  --sanyaku-gold-text-dk: #ffd700;
+  --sanyaku-gold-text-lt: #6e5d00;
+  --sanyaku-gold-point-dk: #b59a00;
+  --sanyaku-gold-point-lt: #947e00;
+
+  --maegashira-blue-line-dk: #655ce0;
+  --maegashira-blue-line-lt: #1c4bba;
+  --maegashira-blue-text-dk: #655ce0;
+  --maegashira-blue-text-lt: #1c4bba;
+  --maegashira-blue-point-dk: #5573e0;
+  --maegashira-blue-point-lt: #2e63bf;
 
   --force: #e41a1c;
   --push: #33a02c;
@@ -29,12 +46,11 @@
   --uncategorized: #ccc;
 }
 
-/* semantic color variables for this project */
 :root {
   --section-gap: 160px;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --color-background: var(--background-white);
     --color-background-soft: var(--background-md-gray-dk);
@@ -42,22 +58,26 @@
     --color-tooltip-border: var(--tooltip-border);
     --color-heading-background: var(--header-lt);
     --color-input-background: var(--white);
-    --color-input-hover: var(--light-gray);
+    --color-input-hover: var(--white);
     --color-input-border: var(--gray-black);
     --color-text: var(--text-gray);
-    --color-anchor: var(--red-dk);
-    --color-active: var(--blue-dark);
     --color-text-active: var(--text-gray-blue);
     --color-heading-underline: var(--red);
     --color-selected-item: var(--selected-item-lt);
+    --color-table-emphasis: var(--light-gray);
     --color-matchup-ring: var(--ring-lt);
+
+    --color-graph-sanyaku-text: var(--sanyaku-gold-text-lt);
+    --color-graph-sanyaku-line: var(--sanyaku-gold-line-lt);
+    --color-graph-sanyaku-point: var(--sanyaku-gold-point-lt);
+    --color-graph-maegashira-text: var(--maegashira-blue-text-lt);
+    --color-graph-maegashira-line: var(--maegashira-blue-line-lt);
+    --color-graph-maegashira-point: var(--maegashira-blue-point-lt);
+    --color-graph-default: var(--medium-gray);
   }
 }
 
-/* this is the dark color theme...
- * setting to light for now so i can build light w/o
- * changing my browser color scheme */
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--background-gray-dk);
     --color-background-soft: var(--background-md-gray-dk);
@@ -73,7 +93,16 @@
     --color-text-active: var(--blue);
     --color-heading-underline: var(--red-dk);
     --color-selected-item: var(--selected-item-dk);
-    --color-matchup-ring: var(--black);
+    --color-table-emphasis: var(--dark-gray);
+    --color-matchup-ring: var(--ring-dk);
+
+    --color-graph-sanyaku-text: var(--sanyaku-gold-text-dk);
+    --color-graph-sanyaku-line: var(--sanyaku-gold-line-dk);
+    --color-graph-sanyaku-point: var(--sanyaku-gold-point-dk);
+    --color-graph-maegashira-text: var(--maegashira-blue-text-dk);
+    --color-graph-maegashira-line: var(--maegashira-blue-line-dk);
+    --color-graph-maegashira-point: var(--maegashira-blue-point-dk);
+    --color-graph-default: var(--medium-gray);
   }
 }
 

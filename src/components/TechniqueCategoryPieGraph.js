@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useRef } from "react";
 import * as d3 from "d3";
+import styles from "./styles/TechniqueCategoryPieGraph.module.css";
 
 const TechniqueCategoryPieGraph = ({ data }) => {
   const graph = useRef(null);
@@ -152,6 +153,7 @@ const TechniqueCategoryPieGraph = ({ data }) => {
     // these labels are drawn last, yet there are lines that overlap label text
     smallArcLabels
       .append("text")
+      .attr("class", styles.smallArcLabel)
       .attr("transform", (d) => {
         const [x, y] = arc.centroid(d);
         return `translate(${x * 2},${y * 2})`;
@@ -164,7 +166,6 @@ const TechniqueCategoryPieGraph = ({ data }) => {
       .attr("x", 0)
       .attr("y", (_, i) => `${i}em`)
       .attr("font-weight", (_, i) => (i ? null : "bold"))
-      .attr("fill", "#ccc") // TODO: This needs to change based on light or dark color scheme
       .text((d) => {
         const formatted = d3.format(".2%")(d);
         if (formatted === "NaN%") return d;

@@ -1,5 +1,6 @@
 .tooltip {
   background-color: var(--color-tooltip-background);
+  color: var(--black);
   padding: 3px 12px;
   font-size: 1rem;
   font-family: sans-serif;
@@ -16,4 +17,39 @@
 .tooltip p {
   font-size: 14px;
   border-radius: 4px;
+}
+
+.sanyakuLine {
+  stroke: var(--color-graph-sanyaku-line);
+  stroke-width: 2px;
+}
+
+.maegashiraLine {
+  stroke: var(--color-graph-maegashira-line);
+  stroke-width: 2px;
+}
+
+.sanyakuLabel {
+  fill: var(--color-graph-sanyaku-text);
+}
+
+.maegashiraLabel {
+  fill: var(--color-graph-maegashira-text);
+}
+
+.sanyakuPoint {
+  fill: var(--color-graph-sanyaku-point);
+}
+
+.maegashiraPoint {
+  fill: var(--color-graph-maegashira-point);
+}
+
+.label,
+.point {
+  fill: var(--color-graph-default);
+}
+
+.gridLine {
+  stroke: var(--color-graph-default);
 }

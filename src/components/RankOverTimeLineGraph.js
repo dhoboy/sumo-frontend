@@ -64,16 +64,6 @@ const RankOverTimeLineGraph = ({ data }) => {
     const lowestSanyaku = 4; // Komusubi
     const lowestMaegashira = 22; // Maegashira #18
 
-    // TODO: make these change based on light or dark color theme
-    const sanyakuGoldLine = "#ffd700";
-    const sanyakuGoldPoint = "#B59A00";
-    const sanyakuGoldText = "#ffd700";
-    // const sanyakuGoldText = "#695E1F";
-    const maegashiraBlueLine = "#655CE0";
-    const maegashiraBluePoint = "#5573E0";
-    const maegashiraBlueText = "#655CE0";
-    // const maegashiraBlueText = "#474561";
-
     const xAxis = d3
       .axisBottom(xScale)
       .ticks(width / 80)
@@ -167,30 +157,32 @@ const RankOverTimeLineGraph = ({ data }) => {
     const yAxisTicks = yAxisG.selectAll(".tick");
     yAxisTicks.attr("font-size", smallScreen ? "16px " : "12px");
 
-    yAxisTicks.selectAll("text").attr("fill", (d) => {
-      if (d <= lowestSanyaku) return sanyakuGoldText;
-      if (d > lowestSanyaku && d <= lowestMaegashira) return maegashiraBlueText;
-      return "#ccc";
+    yAxisTicks.selectAll("text").attr("class", (d) => {
+      if (d <= lowestSanyaku) {
+        return styles.sanyakuLabel;
+      }
+      if (d > lowestSanyaku && d <= lowestMaegashira) {
+        return styles.maegashiraLabel;
+      }
+      return styles.label;
     });
 
     const rankLines = svg.append("g");
     rankLines
       .append("line")
+      .attr("class", styles.sanyakuLine)
       .attr("x1", marginLeft - 6)
       .attr("x2", width - marginRight)
       .attr("y1", yScale(lowestSanyaku))
-      .attr("y2", yScale(lowestSanyaku))
-      .attr("stroke", sanyakuGoldLine)
-      .attr("stroke-width", 2);
+      .attr("y2", yScale(lowestSanyaku));
 
     rankLines
       .append("line")
+      .attr("class", styles.maegashiraLine)
       .attr("x1", marginLeft - 6)
       .attr("x2", width - marginRight)
       .attr("y1", yScale(lowestMaegashira))
-      .attr("y2", yScale(lowestMaegashira))
-      .attr("stroke", maegashiraBlueLine)
-      .attr("stroke-width", 2);
+      .attr("y2", yScale(lowestMaegashira));
 
     // line connecting the points
     svg
@@ -270,8 +262,8 @@ const RankOverTimeLineGraph = ({ data }) => {
 
     stars
       .append("path")
+      .attr("class", styles.sanyakuPoint)
       .attr("d", symbol.size(50))
-      .attr("fill", sanyakuGoldPoint)
       .attr("transform", (d) => {
         return `translate(${xScale(
           new Date(+d.tournament.year, +d.tournament.month - 1)
@@ -326,7 +318,6 @@ const RankOverTimeLineGraph = ({ data }) => {
     const points = svg
       .selectAll(".point")
       .data(data.filter((d) => d.rank_value > 1)) // yokozuna is drawn with stars
-      // .data(data)
       .join("g")
       .attr("class", "point");
 
@@ -392,13 +383,13 @@ const RankOverTimeLineGraph = ({ data }) => {
         xScale(new Date(+d.tournament.year, +d.tournament.month - 1))
       )
       .attr("cy", (d) => yScale(d.rank_value))
-      .attr("fill", (d) => {
+      .attr("class", (d) => {
         if (d.rank_value <= lowestSanyaku) {
-          return sanyakuGoldPoint;
+          return styles.sanyakuPoint;
         } else if (d.rank_value <= lowestMaegashira) {
-          return maegashiraBluePoint;
+          return styles.maegashiraPoint;
         }
-        return "#ccc";
+        return styles.point;
       })
       .attr("r", (d) => {
         return 3;

@@ -25,8 +25,9 @@ export const WinSizeContext = React.createContext();
 
 // TODO --
 // code clean-up
-// color themes
 // testing
+// double check loading
+// have new pages load and scroll top
 const App = () => {
   const dispatch = useDispatch();
   const tournamentDates = useSelector(selectTournamentDates);

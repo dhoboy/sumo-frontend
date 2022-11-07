@@ -18,16 +18,25 @@
 }
 
 .technique_breakdown_table tr:nth-child(even) {
-  background-color: #222;
+  background-color: var(--color-table-emphasis);
 }
 
 .technique_breakdown_table tbody tr:hover {
-  background-color: #222;
+  background-color: var(--color-table-emphasis);
 }
 
 .technique_category div {
   border-radius: 4px;
   text-align: center;
+}
+
+.force,
+.push,
+.dodge,
+.throw,
+.default,
+.uncategorized {
+  color: var(--white);
 }
 
 .force {
