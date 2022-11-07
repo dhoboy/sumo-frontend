@@ -37,6 +37,11 @@ const RikishiList = () => {
   const active = makeBool(searchParams.get("active"));
   const yokozuna = makeBool(searchParams.get("yokozuna"));
 
+  // scroll to top of page on load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const headers = [
     {
       colKey: "name",

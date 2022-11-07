@@ -55,14 +55,14 @@ const RikishiDetail = () => {
     .sort((a, b) => b.count - a.count)
     .filter((_, i) => i < 10);
 
-  console.log("wins_by_technique: ", wins_by_technique);
-  console.log("wins_by_technique_category: ", wins_by_technique_category);
-  console.log("losses_to_technique: ", losses_to_technique);
-  console.log("losses_to_technique_category: ", losses_to_technique_category);
-
   const rankOverTime = useSelector(
     (state) => selectRikishiRankOverTime(state, { rikishi: name }) ?? {}
   );
+
+  // scroll to top of page on load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // load rikishi data needed for this page
   useEffect(() => {

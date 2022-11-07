@@ -58,6 +58,11 @@ const Matchups = () => {
     return allMatchups[matchupKey1] || allMatchups[matchupKey2];
   })();
 
+  // scroll to top of page on load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (selectedRikishi.length && selectedOpponent.length && !matchupData) {
       dispatch(

@@ -30,6 +30,11 @@ const TournamentBoutDetail = () => {
   const searchBy = searchParams.get("searchBy") || "name";
   const searchText = searchParams.get("searchText") || "";
 
+  // scroll to top of page on load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (!searchParams.get("searchBy")) {
       searchParams.set("searchBy", "name");

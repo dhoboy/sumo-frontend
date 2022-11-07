@@ -40,6 +40,11 @@ const TournamentList = () => {
     setSearchParams(searchParams);
   };
 
+  // scroll to top of page on load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     if (!page) {
       searchParams.set("page", 1);
