@@ -31,7 +31,6 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
       xPadding = 0.1, // amount of x-range to reserve to separate bars
       yFormat, // a format specifier string for the y-axis
       yLabel, // a label for the y-axis
-      color = "currentColor", // bar fill color
     } = {}
   ) => {
     // Compute values.
@@ -208,17 +207,14 @@ const TechniqueBarGraph = ({ data, yLabel = "Percentage" }) => {
         height: 500,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, yLabel]);
 
-  // Draw graph when data is ready, tear down graph when unmounting
+  // Draw graph when data is ready, tear down graph when unmounting doesn't work, so it is omitted
   useEffect(() => {
     if (data.length) {
       drawGraph();
     }
-    // This isn't working... check out unmounting graph at some point
-    // return () => {
-    //   removeGraph();
-    // };
   }, [data, drawGraph]);
 
   return <div ref={graph}></div>;

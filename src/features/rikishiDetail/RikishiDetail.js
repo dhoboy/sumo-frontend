@@ -1,32 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import {
-  selectRikishiBaseInfo,
-  // selectRikishiBaseInfoStatus,
-  // selectRikishiBaseInfoErrorMsg,
-} from "../../stores/rikishiBaseInfoSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { selectRikishiBaseInfo } from "../../stores/rikishiBaseInfoSlice";
 import {
   fetchRikishiRankOverTime,
   selectRikishiRankOverTime,
-  // selectRikishiRankOverTimeStatus,
-  // selectRikishiRankOverTimeErrorMsg,
 } from "../../stores/rikishiRankOverTimeSlice";
 import {
   fetchRikishiTechniqueBreakdown,
   selectRikishiTechniqueBreakdown,
-  // selectRikishiTechniqueBreakdownStatus,
-  // selectRikishiTechniqueBreakdownErrorMsg,
 } from "../../stores/rikishiTechniqueBreakdownSlice";
 import TechniqueBreakdownTable from "../../components/TechniqueBreakdownTable";
 import TechniqueCategoryPieGraph from "../../components/TechniqueCategoryPieGraph";
 import TechniqueBarGraph from "../../components/TechniqueBarGraph";
 import RankOverTimeLineGraph from "../../components/RankOverTimeLineGraph";
-import { monthMap, formatPercent } from "../../utils";
+import { monthMap } from "../../utils";
 import styles from "./RikishiDetail.module.css";
 
-// TODO: tidy this up with css grid
-//       get that image to not take so long to load?
 const RikishiDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();

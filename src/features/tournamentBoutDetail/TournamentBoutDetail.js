@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOADING } from "../../constants.js";
+import { LOADING, FAILED } from "../../constants.js";
 import {
   Link,
   useParams,
@@ -72,10 +72,13 @@ const TournamentBoutDetail = () => {
     switch (searchBy.toLowerCase()) {
       case "name":
         return regex.test(east) || regex.test(west);
+
       case "technique":
         return regex.test(technique);
+
       case "technique_category":
         return regex.test(technique_category);
+
       default:
         return true;
     }
@@ -127,8 +130,6 @@ const TournamentBoutDetail = () => {
       display: "Tech. Category",
       sortType: "string",
     },
-    /* { colKey: "is_playoff", display: "Playoff Match", sortType: "string" }, */
-    /* { colKey: "loser", display: "Loser", sortType: "string" }, */
   ];
 
   const onSearchByChange = (nextSearchBy) => {
@@ -150,7 +151,7 @@ const TournamentBoutDetail = () => {
     <Loader
       size="large"
       loading={status === LOADING}
-      error={false}
+      error={status === FAILED}
       errorMsg={errorMsg}
     >
       <div className={styles.wrapper}>

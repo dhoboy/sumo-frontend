@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./styles/Pagination.module.css";
 
-// my convention so I can see prop info at top of the file
+// FYI: my convention so I can see prop info at top of the file
 const prop_info = {
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,

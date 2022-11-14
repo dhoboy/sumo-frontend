@@ -33,13 +33,9 @@ const initialState = {
 export const fetchMatchupList = createAsyncThunk(
   "matchups/fetchList",
   async ({ rikishi, opponent }, { rejectWithValue }) => {
-    // TODO: If data already in the reducer here,
-    // return an empty object, like a noop, and
-    // don't change anything in the reducer under the fulfilled case
     try {
       const url = `http://localhost:3005/bout/list/${rikishi}/${opponent}`;
       const resp = await axios.get(url);
-      console.log("resp from fetch matchups: ", resp);
       return {
         rikishi,
         opponent,

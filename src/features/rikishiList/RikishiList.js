@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { IDLE, LOADING, SUCCESS, FAILED } from "../../constants.js";
+import { IDLE, LOADING, FAILED } from "../../constants.js";
 import {
   selectAllRikishiBaseInfo,
   selectRikishiBaseInfoStatus,
@@ -71,14 +71,12 @@ const RikishiList = () => {
 
       acc = acc.concat({
         ...data[next],
-        ...{
-          tournament: `${
-            smallScreen ? smallMonthMap[month] : monthMap[month]
-          } ${year}`,
-        },
-        ...{ tournament_date: new Date(year, month - 1) },
-        ...{ rank: data[next]?.rank?.rank },
-        ...{ rank_value: data[next]?.rank?.rank_value },
+        tournament: `${
+          smallScreen ? smallMonthMap[month] : monthMap[month]
+        } ${year}`,
+        tournament_date: new Date(year, month - 1),
+        rank: data[next]?.rank?.rank,
+        rank_value: data[next]?.rank?.rank_value,
       });
       return acc;
     }, [])
@@ -106,8 +104,6 @@ const RikishiList = () => {
 
       return clause;
     });
-
-  console.log("tableReadyData: ", tableReadyData);
 
   // Pagination
   const page = searchParams.get("page");
@@ -166,7 +162,7 @@ const RikishiList = () => {
   return (
     <Loader
       loading={status === LOADING || status === IDLE}
-      error={false}
+      error={status === FAILED}
       errorMsg={errorMsg}
       size="medium"
     >

@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { selectAllRikishiBaseInfo } from "../../stores/rikishiBaseInfoSlice";
+import {
+  selectAllRikishiBaseInfo,
+  selectRikishiBaseInfoStatus,
+  selectRikishiBaseInfoErrorMsg,
+} from "../../stores/rikishiBaseInfoSlice";
 import { LOADING, FAILED } from "../../constants.js";
 import {
   fetchMatchupList,
@@ -17,9 +21,11 @@ import styles from "./Matchups.module.css";
 const Matchups = () => {
   const dispatch = useDispatch();
   const allRikishi = useSelector(selectAllRikishiBaseInfo, shallowEqual);
+  const rikishiBaseInfoStatus = useSelector(selectRikishiBaseInfoStatus);
+  const rikishiBaseInfoErrorMsg = useSelector(selectRikishiBaseInfoErrorMsg);
   const allMatchups = useSelector(selectAllMatchups);
-  const status = useSelector(selectMatchupsStatus);
-  const errorMsg = useSelector(selectMatchupsErrorMsg);
+  const matchupsStatus = useSelector(selectMatchupsStatus);
+  const matchupsErrorMsg = useSelector(selectMatchupsErrorMsg);
 
   const [rikishiFilterText, setRikishiFilterText] = useState("");
   const [opponentFilterText, setOpponentFilterText] = useState("");
@@ -96,14 +102,21 @@ const Matchups = () => {
             }
           />
         ) : (
-          <RikishiSelection
-            rikishiOrOpponent="rikishi"
-            allRikishi={allRikishi}
-            options={rikishiOptions}
-            handleFilterTextChange={handleRikishiTextChange}
-            filterText={rikishiFilterText}
-            handleClick={handleRikishiClick}
-          />
+          <Loader
+            loading={rikishiBaseInfoStatus === LOADING}
+            error={rikishiBaseInfoStatus === FAILED}
+            errorMsg={rikishiBaseInfoErrorMsg}
+            size="small"
+          >
+            <RikishiSelection
+              rikishiOrOpponent="rikishi"
+              allRikishi={allRikishi}
+              options={rikishiOptions}
+              handleFilterTextChange={handleRikishiTextChange}
+              filterText={rikishiFilterText}
+              handleClick={handleRikishiClick}
+            />
+          </Loader>
         )}
         <div className={styles.middleColumn}>
           <h2 className={styles.vs}>VS</h2>
@@ -117,20 +130,27 @@ const Matchups = () => {
             }
           />
         ) : (
-          <RikishiSelection
-            rikishiOrOpponent="opponent"
-            allRikishi={allRikishi}
-            options={opponentOptions}
-            handleFilterTextChange={handleOpponentTextChange}
-            filterText={opponentFilterText}
-            handleClick={handleOpponentClick}
-          />
+          <Loader
+            loading={rikishiBaseInfoStatus === LOADING}
+            error={rikishiBaseInfoStatus === FAILED}
+            errorMsg={rikishiBaseInfoErrorMsg}
+            size="small"
+          >
+            <RikishiSelection
+              rikishiOrOpponent="opponent"
+              allRikishi={allRikishi}
+              options={opponentOptions}
+              handleFilterTextChange={handleOpponentTextChange}
+              filterText={opponentFilterText}
+              handleClick={handleOpponentClick}
+            />
+          </Loader>
         )}
       </div>
       <Loader
-        loading={status === LOADING}
-        error={status === FAILED}
-        errorMsg={errorMsg}
+        loading={matchupsStatus === LOADING}
+        error={matchupsStatus === FAILED}
+        errorMsg={matchupsErrorMsg}
         className={styles.matchupsResultsWrapper}
         size="small"
       >

@@ -40,7 +40,6 @@ export const smallMonthMap = {
   nov: 11,
 };
 
-// TODO: Update with d3 number format
 export const formatPercent = (num) => {
   return (num * 100).toFixed(2) + "%";
 };

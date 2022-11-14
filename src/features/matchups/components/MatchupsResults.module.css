@@ -8,8 +8,17 @@
   text-align: center;
 }
 
-.matchupsTable th {
+.matchupsTable th.rikishiName {
   text-transform: uppercase;
+}
+
+.matchupsTable :global(.resultTypeDropdown) {
+  display: flex;
+  flex-direction: column;
+}
+
+.matchupsTable :global(.resultTypeDropdown) select {
+  text-align: center;
 }
 
 .matchupsTable td {
@@ -59,5 +68,4 @@
 
 .uncategorized {
   background-color: var(--uncategorized);
-  color: var(--black);
 }

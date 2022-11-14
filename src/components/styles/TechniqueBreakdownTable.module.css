@@ -60,7 +60,7 @@
 }
 
 .uncategorized {
-  background-color: #666;
+  background-color: var(--uncategorized);
 }
 
 @media (min-width: 768px) {

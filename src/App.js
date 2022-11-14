@@ -24,9 +24,7 @@ import "@fortawesome/fontawesome-free/js/all.js";
 export const WinSizeContext = React.createContext();
 
 // TODO --
-// code clean-up
 // testing
-// double check loading
 const App = () => {
   const dispatch = useDispatch();
   const tournamentDates = useSelector(selectTournamentDates);
@@ -71,7 +69,6 @@ const App = () => {
           <Route path="rikishi" element={<RikishiList />} />
           <Route path="rikishi/:name" element={<RikishiDetail />} />
 
-          {/* Tournaments TODO: add a redirect for tournaments/:year/:month to go to day 1 */}
           <Route path="tournaments" element={<TournamentList />} />
           <Route
             path="tournaments/:year/:month"

@@ -223,19 +223,11 @@ const TechniqueCategoryPieGraph = ({ data }) => {
     }
   }, [data]);
 
-  // const removeGraph = () => {
-  //   d3.select(graph.current).remove();
-  // };
-
-  // Draw graph when data is ready, tear down graph when unmounting
+  // Draw graph when data is ready, tear down graph when unmounting not working, so its ommited
   useEffect(() => {
     if (data.length) {
       drawGraph();
     }
-    // This isn't working... check out unmounting graph at some point
-    // return () => {
-    //   removeGraph();
-    // };
   }, [data, drawGraph]);
 
   return <div ref={graph}></div>;

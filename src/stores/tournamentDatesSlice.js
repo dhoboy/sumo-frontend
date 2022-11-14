@@ -15,7 +15,6 @@ export const fetchTournamentDates = createAsyncThunk(
   "tournamentDates/fetch",
   async (_, { rejectWithValue }) => {
     try {
-      // consider using 127.0.0.1 instead of "localhost" here
       // const resp = await axios.get("heroku.app.name/tournament/list");
       const resp = await axios.get("http://127.0.0.1:3005/tournament/list");
       return resp.data?.items;
@@ -40,7 +39,7 @@ export const tournamentDatesSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchTournamentDates.rejected, (state, action) => {
-        state.status = FAILED; // TODO: Log these errors ?
+        state.status = FAILED;
         state.errorMsg = action.payload;
       });
   },

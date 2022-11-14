@@ -7,6 +7,8 @@ const prop_info = {
   options: PropTypes.array.isRequired, // arr of strings or objects with label, value keys
   selected: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  fontSize: PropTypes.string, // optional font size of dropdown options
+  className: PropTypes.string, // optional className to add so components can customize this further
 };
 
 const Dropdown = ({
@@ -14,13 +16,20 @@ const Dropdown = ({
   options = [],
   selected = "",
   onChange = () => {},
+  fontSize = "16px",
+  className = "",
 }) => {
   const handleChange = (e) => {
     onChange(e.target.value);
   };
 
   return (
-    <label className={styles.container}>
+    <label
+      className={
+        className ? `${styles.container} ${className}` : styles.container
+      }
+      style={{ "--font-size": fontSize }}
+    >
       <span>{label}</span>
       <select
         className={styles.dropdown}

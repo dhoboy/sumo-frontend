@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LOADING } from "../constants.js";
+import { LOADING, FAILED } from "../constants.js";
 import DisplayTable from "../components/DisplayTable";
 import PropTypes from "prop-types";
 import Loader from "../components/Loader";
@@ -80,7 +80,11 @@ const RikishiTournamentSummary = ({ year, month, rikishiSearchText = "" }) => {
   ];
 
   return (
-    <Loader loading={status === LOADING} error={false} errorMsg={errorMsg}>
+    <Loader
+      loading={status === LOADING}
+      error={status === FAILED}
+      errorMsg={errorMsg}
+    >
       <div className={styles.tournamentSummary}>
         <h3 className={styles.h3}>
           <Link to={`/tournaments/${year}/${month}/1`}>

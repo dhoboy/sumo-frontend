@@ -26,15 +26,12 @@ const RankOverTimeLineGraph = ({ data }) => {
       marginLeft = 100, // left margin, in pixels
       width = 640, // outer width, in pixels
       height = 400, // outer height, in pixels
-      xType = d3.scaleUtc, // the x-scale type
       xDomain, // [xmin, xmax]
       xRange = [marginLeft, width - marginRight], // [left, right]
       yType = d3.scaleLinear, // the y-scale type
       yDomain, // [ymin, ymax]
       yRange = [height - marginBottom, marginTop], // [bottom, top]
-      yFormat, // a format specifier string for the y-axis
       yLabel, // a label for the y-axis
-      color = "currentColor", // stroke color of line
       strokeLinecap = "round", // stroke line cap of the line
       strokeLinejoin = "round", // stroke line join of the line
       strokeWidth = 1.5, // stroke width of line, in pixels
@@ -59,7 +56,6 @@ const RankOverTimeLineGraph = ({ data }) => {
     const yScale = yType(yDomain, yRange);
 
     const tournamentMonths = [1, 3, 5, 7, 9, 11];
-    const highestRankAchieved = d3.min(data.map((d) => d.rank_value));
 
     const lowestSanyaku = 4; // Komusubi
     const lowestMaegashira = 22; // Maegashira #18
@@ -157,6 +153,7 @@ const RankOverTimeLineGraph = ({ data }) => {
     const yAxisTicks = yAxisG.selectAll(".tick");
     yAxisTicks.attr("font-size", smallScreen ? "16px " : "12px");
 
+    // style ticks the appropriate color based on rank
     yAxisTicks.selectAll("text").attr("class", (d) => {
       if (d <= lowestSanyaku) {
         return styles.sanyakuLabel;
@@ -195,6 +192,10 @@ const RankOverTimeLineGraph = ({ data }) => {
       .attr("stroke-opacity", strokeOpacity)
       .attr("d", line(I));
 
+    // several selections have the same hover tooltip;
+    // save them in an array for less code duplication
+    let withTooltip = [];
+
     // Yokozuna stars
     const symbol = d3.symbol();
     symbol.type(d3.symbolStar);
@@ -206,113 +207,29 @@ const RankOverTimeLineGraph = ({ data }) => {
       .attr("class", "star");
 
     // big hover circles around the stars
-    stars
-      .append("circle")
-      .attr("class", "big-points-make-hover-easy")
-      .attr("cx", (d) =>
-        xScale(new Date(+d.tournament.year, +d.tournament.month - 1))
-      )
-      .attr("cy", (d) => yScale(d.rank_value))
-      .attr("fill-opacity", 0)
-      .attr("r", 10)
-      .on(
-        "mouseover",
-        smallScreen
-          ? null
-          : (event, d) => {
-              const date = new Date(
-                +d.tournament.year,
-                +d.tournament.month - 1
-              );
+    withTooltip.push(
+      stars
+        .append("circle")
+        .attr("class", "big-points-make-hover-easy")
+        .attr("cx", (d) =>
+          xScale(new Date(+d.tournament.year, +d.tournament.month - 1))
+        )
+        .attr("cy", (d) => yScale(d.rank_value))
+        .attr("fill-opacity", 0)
+        .attr("r", 10)
+    );
 
-              tooltip.html("");
-              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
-
-              tooltip.append("p").text(`${d.rank}`);
-
-              return tooltip.style("visibility", "visible");
-            }
-      )
-      .on(
-        "mousemove",
-        smallScreen
-          ? null
-          : (event, d) => {
-              let { pageX, pageY } = event;
-              let left = pageX + 10;
-              let top = pageY - 50;
-
-              if (pageX >= 715) {
-                left = pageX - 200;
-              }
-
-              return tooltip
-                .style("top", `${top}px`)
-                .style("left", `${left}px`);
-            }
-      )
-      .on(
-        "mouseout",
-        smallScreen
-          ? null
-          : () => {
-              return tooltip.style("visibility", "hidden");
-            }
-      );
-
-    stars
-      .append("path")
-      .attr("class", styles.sanyakuPoint)
-      .attr("d", symbol.size(50))
-      .attr("transform", (d) => {
-        return `translate(${xScale(
-          new Date(+d.tournament.year, +d.tournament.month - 1)
-        )},${yScale(d.rank_value)})`;
-      })
-      .on(
-        "mouseover",
-        smallScreen
-          ? null
-          : (event, d) => {
-              const date = new Date(
-                +d.tournament.year,
-                +d.tournament.month - 1
-              );
-
-              tooltip.html("");
-              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
-
-              tooltip.append("p").text(`${d.rank}`);
-
-              return tooltip.style("visibility", "visible");
-            }
-      )
-      .on(
-        "mousemove",
-        smallScreen
-          ? null
-          : (event, d) => {
-              let { pageX, pageY } = event;
-              let left = pageX + 10;
-              let top = pageY - 50;
-
-              if (pageX >= 715) {
-                left = pageX - 200;
-              }
-
-              return tooltip
-                .style("top", `${top}px`)
-                .style("left", `${left}px`);
-            }
-      )
-      .on(
-        "mouseout",
-        smallScreen
-          ? null
-          : () => {
-              return tooltip.style("visibility", "hidden");
-            }
-      );
+    withTooltip.push(
+      stars
+        .append("path")
+        .attr("class", styles.sanyakuPoint)
+        .attr("d", symbol.size(50))
+        .attr("transform", (d) => {
+          return `translate(${xScale(
+            new Date(+d.tournament.year, +d.tournament.month - 1)
+          )},${yScale(d.rank_value)})`;
+        })
+    );
 
     // All other ranks drawn with points
     const points = svg
@@ -322,123 +239,84 @@ const RankOverTimeLineGraph = ({ data }) => {
       .attr("class", "point");
 
     // Big points to make the hover easy
-    points
-      .append("circle")
-      .attr("class", "big-points-make-hover-easy")
-      .attr("cx", (d) =>
-        xScale(new Date(+d.tournament.year, +d.tournament.month - 1))
-      )
-      .attr("cy", (d) => yScale(d.rank_value))
-      .attr("fill-opacity", 0)
-      .attr("r", 10)
-      .on(
-        "mouseover",
-        smallScreen
-          ? null
-          : (event, d) => {
-              const date = new Date(
-                +d.tournament.year,
-                +d.tournament.month - 1
-              );
-
-              tooltip.html("");
-              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
-
-              tooltip.append("p").text(`${d.rank}`);
-
-              return tooltip.style("visibility", "visible");
-            }
-      )
-      .on(
-        "mousemove",
-        smallScreen
-          ? null
-          : (event, d) => {
-              let { pageX, pageY } = event;
-              let left = pageX + 10;
-              let top = pageY - 50;
-
-              if (pageX >= 715) {
-                left = pageX - 200;
-              }
-
-              return tooltip
-                .style("top", `${top}px`)
-                .style("left", `${left}px`);
-            }
-      )
-      .on(
-        "mouseout",
-        smallScreen
-          ? null
-          : () => {
-              return tooltip.style("visibility", "hidden");
-            }
-      );
+    withTooltip.push(
+      points
+        .append("circle")
+        .attr("class", "big-points-make-hover-easy")
+        .attr("cx", (d) =>
+          xScale(new Date(+d.tournament.year, +d.tournament.month - 1))
+        )
+        .attr("cy", (d) => yScale(d.rank_value))
+        .attr("fill-opacity", 0)
+        .attr("r", 10)
+    );
 
     // the points you see
-    points
-      .append("circle")
-      .attr("cx", (d) =>
-        xScale(new Date(+d.tournament.year, +d.tournament.month - 1))
-      )
-      .attr("cy", (d) => yScale(d.rank_value))
-      .attr("class", (d) => {
-        if (d.rank_value <= lowestSanyaku) {
-          return styles.sanyakuPoint;
-        } else if (d.rank_value <= lowestMaegashira) {
-          return styles.maegashiraPoint;
-        }
-        return styles.point;
-      })
-      .attr("r", (d) => {
-        return 3;
-        //return d.rank_value === highestRankAchieved ? 5 : 3;
-      })
-      .on(
-        "mouseover",
-        smallScreen
-          ? null
-          : (event, d) => {
-              const date = new Date(
-                +d.tournament.year,
-                +d.tournament.month - 1
-              );
+    withTooltip.push(
+      points
+        .append("circle")
+        .attr("cx", (d) =>
+          xScale(new Date(+d.tournament.year, +d.tournament.month - 1))
+        )
+        .attr("cy", (d) => yScale(d.rank_value))
+        .attr("class", (d) => {
+          if (d.rank_value <= lowestSanyaku) {
+            return styles.sanyakuPoint;
+          } else if (d.rank_value <= lowestMaegashira) {
+            return styles.maegashiraPoint;
+          }
+          return styles.point;
+        })
+        .attr("r", 3)
+    );
 
-              tooltip.html("");
-              tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
+    withTooltip.forEach((selection) => {
+      selection
+        .on(
+          "mouseover",
+          smallScreen
+            ? null
+            : (event, d) => {
+                const date = new Date(
+                  +d.tournament.year,
+                  +d.tournament.month - 1
+                );
 
-              tooltip.append("p").text(`${d.rank}`);
+                tooltip.html("");
+                tooltip.append("h4").text(d3.timeFormat("%B %Y")(date));
 
-              return tooltip.style("visibility", "visible");
-            }
-      )
-      .on(
-        "mousemove",
-        smallScreen
-          ? null
-          : (event, d) => {
-              let { pageX, pageY } = event;
-              let left = pageX + 10;
-              let top = pageY - 50;
+                tooltip.append("p").text(`${d.rank}`);
 
-              if (pageX >= 715) {
-                left = pageX - 200;
+                return tooltip.style("visibility", "visible");
               }
+        )
+        .on(
+          "mousemove",
+          smallScreen
+            ? null
+            : (event, d) => {
+                let { pageX, pageY } = event;
+                let left = pageX + 10;
+                let top = pageY - 50;
 
-              return tooltip
-                .style("top", `${top}px`)
-                .style("left", `${left}px`);
-            }
-      )
-      .on(
-        "mouseout",
-        smallScreen
-          ? null
-          : () => {
-              return tooltip.style("visibility", "hidden");
-            }
-      );
+                if (pageX >= 715) {
+                  left = pageX - 200;
+                }
+
+                return tooltip
+                  .style("top", `${top}px`)
+                  .style("left", `${left}px`);
+              }
+        )
+        .on(
+          "mouseout",
+          smallScreen
+            ? null
+            : () => {
+                return tooltip.style("visibility", "hidden");
+              }
+        );
+    });
   };
 
   const drawGraph = useCallback(() => {
@@ -455,7 +333,8 @@ const RankOverTimeLineGraph = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  // Draw graph when data is ready, tear down graph when unmounting
+  // Draw graph when data is ready
+  // Returning a tear down function in this useEffect doesn't do anything
   useEffect(() => {
     if (data.length) {
       drawGraph();

@@ -4,7 +4,7 @@ import styles from "./styles/Loader.module.css";
 
 // size is "small", "medium", or "large"
 const Loader = ({ loading, error, errorMsg, size, children, className }) => {
-  const [display, setDisplay] = useState(""); // loader, component, error
+  const [display, setDisplay] = useState(""); // loader, component, or error
   const startTime = useRef(null);
 
   useEffect(() => {

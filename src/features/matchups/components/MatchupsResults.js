@@ -1,11 +1,13 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { monthMap, smallMonthMap } from "../../../utils";
+import Dropdown from "../../../components/Dropdown";
 import { WinSizeContext } from "../../../App";
 import styles from "./MatchupsResults.module.css";
 
 const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
   const el = useRef(null);
   const { winWidth } = useContext(WinSizeContext);
+  const [displayKey, setDisplayKey] = useState("technique");
 
   useEffect(() => {
     if (matchupData) {
@@ -13,18 +15,35 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
     }
   }, [matchupData]);
 
-  // const headers = Object.keys(data.matchups?.[0] || {});
+  const dropdownOptions = [
+    { label: "Technique", value: "technique" },
+    { label: "Tech. Description", value: "technique_en" },
+    { label: "Tech. Category", value: "technique_category" },
+  ];
+
+  const onDropdownChange = (value) => setDisplayKey(value);
+
   const headers = ["rikishi", "date", "opponent"];
 
   const data = (matchupData || []).reduce(
     (acc, next) => {
-      const { winner, year, month, day, technique, technique_category } = next;
+      const {
+        winner,
+        year,
+        month,
+        day,
+        technique,
+        technique_en,
+        technique_category,
+      } = next;
+
       acc.matchups = acc.matchups.concat({
         rikishi,
         opponent,
         winner,
         technique,
-        technique_category,
+        technique_en,
+        technique_category: technique_category || "uncategorized",
         year,
         month,
         day,
@@ -68,8 +87,19 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
                   </th>
                 );
               }
-              // date
-              return <th key={header}></th>;
+              // displaying a results type dropdown above date column
+              return (
+                <th key={header} className={styles.resultType}>
+                  <Dropdown
+                    label="Result Type:"
+                    options={dropdownOptions}
+                    selected={displayKey}
+                    onChange={onDropdownChange}
+                    fontSize="14px"
+                    className="resultTypeDropdown"
+                  />
+                </th>
+              );
             })}
           </tr>
         </thead>
@@ -91,12 +121,8 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
                           key={Math.random().toString(36)}
                           className={styles.technique_category_row}
                         >
-                          <div
-                            className={
-                              styles[row.technique_category || "uncategorized"]
-                            }
-                          >
-                            {row.technique}
+                          <div className={styles[row.technique_category]}>
+                            {row[displayKey]}
                           </div>
                         </td>
                       );
@@ -115,7 +141,7 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
                               styles[row.technique_category || "uncategorized"]
                             }
                           >
-                            {row.technique}
+                            {row[displayKey]}
                           </div>
                         </td>
                       );
