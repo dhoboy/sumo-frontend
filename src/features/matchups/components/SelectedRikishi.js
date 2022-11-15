@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./SelectedRikishi.module.css";
+import styles from "./styles/SelectedRikishi.module.css";
 
 const prop_info = {
   allRikishi: PropTypes.object.isRequired,

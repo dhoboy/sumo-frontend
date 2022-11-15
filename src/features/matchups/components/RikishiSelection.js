@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./RikishiSelection.module.css";
+import styles from "./styles/RikishiSelection.module.css";
 
 const RikishiSelection = ({
   rikishiOrOpponent,

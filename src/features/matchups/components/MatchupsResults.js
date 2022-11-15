@@ -1,8 +1,34 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { monthMap, smallMonthMap } from "../../../utils";
 import Dropdown from "../../../components/Dropdown";
 import { WinSizeContext } from "../../../App";
-import styles from "./MatchupsResults.module.css";
+import styles from "./styles/MatchupsResults.module.css";
+
+const prop_info = {
+  rikishi: PropTypes.string,
+  opponent: PropTypes.string,
+  matchupData: PropTypes.arrayOf(
+    PropTypes.shape({
+      day: PropTypes.number,
+      east: PropTypes.string,
+      east_rank: PropTypes.string,
+      east_rank_value: PropTypes.number,
+      id: PropTypes.number,
+      is_playoff: PropTypes.bool,
+      loser: PropTypes.string,
+      month: PropTypes.string,
+      technique: PropTypes.string,
+      technique_category: PropTypes.string,
+      technique_en: PropTypes.string,
+      west: PropTypes.string,
+      west_rank: PropTypes.string,
+      west_rank_value: PropTypes.number,
+      winner: PropTypes.string,
+      year: PropTypes.number,
+    })
+  ),
+};
 
 const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
   const el = useRef(null);
@@ -171,5 +197,7 @@ const MatchupsResults = ({ rikishi, opponent, matchupData }) => {
     </div>
   );
 };
+
+MatchupsResults.propTypes = prop_info;
 
 export default MatchupsResults;
