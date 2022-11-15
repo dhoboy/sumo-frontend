@@ -1,9 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import rikishiSvg from "../assets/rikishi.svg";
 import styles from "./styles/Loader.module.css";
 
-// size is "small", "medium", or "large"
-const Loader = ({ loading, error, errorMsg, size, children, className }) => {
+const prop_info = {
+  loading: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  error: PropTypes.bool,
+  errorMsg: PropTypes.string,
+  size: PropTypes.string, // size is "small", "medium", or "large"
+  className: PropTypes.string,
+};
+
+const Loader = ({
+  loading,
+  children,
+  error = false,
+  errorMsg = "An error occured. Please try again later!",
+  size = "medium",
+  className = null,
+}) => {
   const [display, setDisplay] = useState(""); // loader, component, or error
   const startTime = useRef(null);
 
@@ -29,7 +45,7 @@ const Loader = ({ loading, error, errorMsg, size, children, className }) => {
 
   if (display === "loading") {
     return (
-      <div className={`${styles.wrapper} ${className}`}>
+      <div className={`${styles.wrapper} ${className ? className : ""}`}>
         <img
           src={rikishiSvg}
           alt="loading"
@@ -43,5 +59,7 @@ const Loader = ({ loading, error, errorMsg, size, children, className }) => {
 
   return <>{children}</>;
 };
+
+Loader.propTypes = prop_info;
 
 export default Loader;

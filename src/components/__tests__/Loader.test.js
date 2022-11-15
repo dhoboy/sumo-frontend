@@ -1,15 +1,15 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { store } from "./stores/store";
 import { createRoot } from "react-dom/client";
-import App from "./App";
+import Loader from "../Loader";
+import Header from "../Header";
 
 test("renders without crashing", () => {
   const div = document.createElement("div");
   const root = createRoot(div);
+
   root.render(
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Loader loading={true} error={false} errorMsg="test" size="medium">
+      <Header />
+    </Loader>
   );
 });
