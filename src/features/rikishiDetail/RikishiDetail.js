@@ -17,6 +17,9 @@ import RankOverTimeLineGraph from "../../components/RankOverTimeLineGraph";
 import { monthMap } from "../../utils";
 import styles from "./RikishiDetail.module.css";
 
+// Component takes no props
+const prop_info = {};
+
 const RikishiDetail = () => {
   const dispatch = useDispatch();
   const params = useParams();

@@ -16,6 +16,9 @@ import Checkbox from "../../components/Checkbox";
 import { WinSizeContext } from "../../App";
 import styles from "./RikishiList.module.css";
 
+// Component takes no props
+const prop_info = {};
+
 const makeBool = (val) => {
   if (val === "true") return true;
   return false;

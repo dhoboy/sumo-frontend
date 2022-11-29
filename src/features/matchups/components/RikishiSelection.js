@@ -1,5 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./styles/RikishiSelection.module.css";
+
+const prop_info = {
+  rikishiOrOpponent: PropTypes.string,
+  allRikishi: PropTypes.object, // Object of all Rikishi info
+  options: PropTypes.array, // Rikishi names
+  handleFilterTextChange: PropTypes.func,
+  filterText: PropTypes.string,
+  handleClick: PropTypes.func,
+};
 
 const RikishiSelection = ({
   rikishiOrOpponent,
@@ -31,5 +41,7 @@ const RikishiSelection = ({
     </div>
   );
 };
+
+RikishiSelection.propTypes = prop_info;
 
 export default RikishiSelection;

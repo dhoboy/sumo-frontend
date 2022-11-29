@@ -18,6 +18,9 @@ import MatchupsResults from "./components/MatchupsResults";
 import Loader from "../../components/Loader";
 import styles from "./Matchups.module.css";
 
+// Component takes no props
+const prop_info = {};
+
 const Matchups = () => {
   const dispatch = useDispatch();
   const allRikishi = useSelector(selectAllRikishiBaseInfo, shallowEqual);
